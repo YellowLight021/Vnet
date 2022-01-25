@@ -23,11 +23,10 @@
 ```
 ## 使用方式
 > 相信你的Fans已经看到这里了，快告诉他们如何快速上手这个项目吧~  
-A：在AI Studio上[运行本项目](https://aistudio.baidu.com/aistudio/projectdetail/3146256)  
+A：在AI Studio上[运行本项目](https://aistudio.baidu.com/aistudio/clusterprojectdetail/3432461/trainTask)  
 B：可以clone下当前github的repo。(确保本地有paddle2.2.0的框架版本环境)
-> 1、到官网下载好luna16数据集，实际代码训练的时候可以只解压部分数据集（所有都解压实在太大了，必要性不大，我只解压了两个subset）
-> 2、设置train.py的root路径。将root路径改成当前你自己的路径。主要是为了能让代码读取imgs和seg-lungs的数据。读者也可以自己更改合适的路径
-> 3、使用终端cd到当前目录下。直接输入python train.py就能运行了（目前只实验了单卡运行环境，并没有做多卡处理后面有条件可以改动下。
-> 4、目前没有写inference的处理留了传参接口， 因为只是为了打比赛达到性能指标，我用train和test处理已经够了。
-> 5、目前模型以checkpoint来保存的，每训练一个epoch进行一次test和一次checkpoint。将error_rate最小的保存成了checkpoint_model_best.pth.rar。
+> 1、直接使用aistudio上的(https://aistudio.baidu.com/aistudio/datasetdetail/119677)，https://aistudio.baidu.com/aistudio/datasetdetail/1860
+> 2、在脚本任务环境下直接提交就可以了run.py文件会自动执行数据集解压缩unzip.py，和训练操作train.py操作
+> 3、目前模型以checkpoint来保存的，每训练一个epoch进行一次test和一次checkpoint。将error_rate最小的保存成了checkpoint_model_best.pth.rar。
+> 4、metric_align.py是metric对齐脚本，测试了一下和官方给到的dice计算是能够对齐的。
 > 日志文件和checkpoint文件我都会上传百度网盘
