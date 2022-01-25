@@ -29,4 +29,6 @@ B：可以clone下当前github的repo。(确保本地有paddle2.2.0的框架版�
 > 2、在脚本任务环境下直接提交就可以了run.py文件会自动执行数据集解压缩unzip.py，和训练操作train.py操作
 > 3、目前模型以checkpoint来保存的，每训练一个epoch进行一次test和一次checkpoint。将error_rate最小的保存成了checkpoint_model_best.pth.rar。
 > 4、metric_align.py是metric对齐脚本，测试了一下和官方给到的dice计算是能够对齐的。
-> 日志文件和checkpoint文件我都会上传百度网盘
+> 日志文件和checkpoint文件我都会上传百度网盘链接：https://pan.baidu.com/s/1xA0CrZeOMaqgp24v5gZWeQ 
+提取码：7sdi 
+--来自百度网盘超级会员V6的分享
