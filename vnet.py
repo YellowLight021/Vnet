@@ -17,6 +17,8 @@ class InputTransition(nn.Layer):
         self.bn1=nn.BatchNorm3D(outchans)
         self.relu1=nn.PReLU()
     def forward(self,x):
+        # import pdb
+        # pdb.set_trace()
         out=self.relu1(self.bn1(self.conv1(x)))
         x16=paddle.concat([x,x,x,x,x,x,x,x,
                            x,x,x,x,x,x,x,x],1)
@@ -77,6 +79,8 @@ class OutputTransition(nn.Layer):
             self.softmax=F.softmax
     def forward(self, x):
         out=self.relu(self.bn1(self.conv1(x)))
+        # import pdb
+        # pdb.set_trace()
         return self.softmax(out,axis=1)
 
 

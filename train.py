@@ -4,6 +4,7 @@ import os
 import paddle
 
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
+from paddle.distributed import fleet
 import time
 import argparse
 import numpy as np
@@ -48,7 +49,7 @@ nodule_masks = None
 # lung_masks = "inferred_seg_lungs_2_5"
 lung_masks = 'seg-lungs-LUNA16'
 # ct_images = "luna16_ct_normalized"
-ct_images = 'imgs'
+ct_images = 'testimgs'
 ct_targets = lung_masks
 # 这个参数弃用，因为目前数据集的尺寸是不一样大的
 target_split = [2, 2, 2]
@@ -71,9 +72,10 @@ def save_checkpoint(state, is_best, path, prefix, epoch=0, filename='checkpoint.
     # pdb.set_trace()
     prefix_save = os.path.join(path, "epoch" + str(epoch))
     name = os.path.join(prefix_save, filename)
-    paddle.save(state, name)
+    # paddle.save(state, name)
     if is_best:
-        shutil.copyfile(name, os.path.join(path, 'checkpoint_model_best.pth.tar'))
+        paddle.save(state, os.path.join(path, 'checkpoint_model_best.pth.tar'))
+        # shutil.copyfile(name, os.path.join(path, 'checkpoint_model_best.pth.tar'))
 
 
 def inference(args, loader, model, transforms):
@@ -110,7 +112,7 @@ def noop(x):
 def main():
     # os.environ['KMP_DUPLICATE_LIB_OK'] = True
     parser = argparse.ArgumentParser()
-    parser.add_argument('--batchSz', type=int, default=8)
+    parser.add_argument('--batchSz', type=int, default=1)
     parser.add_argument('--dice', action='store_true')
     parser.add_argument('--ngpu', type=int, default=1)
     parser.add_argument('--nEpochs', type=int, default=20)
@@ -118,7 +120,7 @@ def main():
                         help='manual epoch number (useful on restarts)')
     parser.add_argument('--resume', default='', type=str, metavar='PATH',
                         help='path to latest checkpoint (default: none)')
-    parser.add_argument('-e', '--evaluate', dest='evaluate', action='store_true',
+    parser.add_argument('-e', '--evaluate', dest='evaluate', default=True, action='store_true',
                         help='evaluate model on validation set')
     parser.add_argument('-i', '--inference', default='', type=str, metavar='PATH',
                         help='run inference on data set and save results')
@@ -136,27 +138,40 @@ def main():
     best_prec1 = 100.
 
     # args.cuda=False
-    args.save = args.save or 'work/vnet.base.{}'.format(datestr())
+    # args.save = args.save or 'work/vnet.base.{}'.format(datestr())
 
     weight_decay = args.weight_decay
-    setproctitle.setproctitle(args.save)
+    # setproctitle.setproctitle(args.save)
+    strategy = fleet.DistributedStrategy()
+    fleet.init(is_collective=True, strategy=strategy)
 
     # paddle.manual_seed(args.seed)
     paddle.seed(args.seed)
 
     print("build vnet")
+
     model = vnet.VNet()
-    batch_size = args.ngpu * args.batchSz
+
+
     # gpu_ids = range(args.ngpu)
     # model = nn.parallel.DataParallel(model, device_ids=gpu_ids)
 
     if args.opt == 'momentum':
-        optimizer = optim.Momentum(learning_rate=0.0001, momentum=0.99, parameters=model.parameters(),
+        optimizer = optim.Momentum(learning_rate=0.001, momentum=0.99, parameters=model.parameters(),
                                    weight_decay=weight_decay)
     elif args.opt == 'adam':
         optimizer = optim.Adam(model.parameters(), weight_decay=weight_decay)
     elif args.opt == 'rmsprop':
         optimizer = optim.RMSprop(model.parameters(), weight_decay=weight_decay)
+
+    print('gpu number is {}'.format(paddle.distributed.get_world_size()))
+    nranks = paddle.distributed.ParallelEnv().nranks
+    local_rank = paddle.distributed.ParallelEnv().local_rank
+    if nranks > 1:
+        paddle.distributed.fleet.init(is_collective=True)
+        optimizer = paddle.distributed.fleet.distributed_optimizer(
+            optimizer)  # The return is Fleet object
+        model = paddle.distributed.fleet.distributed_model(model)
 
     if args.resume:
         if os.path.isfile(args.resume):
@@ -165,16 +180,18 @@ def main():
             args.start_epoch = checkpoint['epoch']
             best_prec1 = checkpoint['best_prec1']
             model.set_state_dict(checkpoint['state_dict'])
-            optimizer.set_state_dict(checkpoint['optimizer_dict'])
+            # optimizer.set_state_dict(checkpoint['optimizer_dict'])
             print("=> loaded checkpoint '{}' (epoch {})"
                   .format(args.evaluate, checkpoint['epoch']))
+            # import pdb
+            # pdb.set_trace()
         else:
             print("=> no checkpoint found at '{}'".format(args.resume))
     else:
         model.apply(weights_init)
 
     train = train_dice
-    test = test_dice
+    eval = eval_dice
     class_balance = False
 
     if not os.path.exists(args.save):
@@ -183,14 +200,14 @@ def main():
     # LUNA16 dataset isotropically scaled to 2.5mm^3
     # and then truncated or zero-padded to 160x128x160
     normMu = [-300]
-    normSigma = [600]
+    normSigma = [700]
     normTransform = transforms.Normalize(normMu, normSigma)
 
     trainTransform = transforms.Compose([
         # transforms.ToTensor(),
         normTransform
     ])
-    testTransform = transforms.Compose([
+    evalTransform = transforms.Compose([
         # transforms.ToTensor(),
         normTransform
     ])
@@ -210,7 +227,7 @@ def main():
         inference_batch_size = args.ngpu
         root = os.path.dirname(src)
         images = os.path.basename(src)
-        dataset = LUNA16(root=root, images=images, transform=testTransform, split=target_split, mode="infer")
+        dataset = LUNA16(root=root, images=images, transform=evalTransform, split=target_split, mode="infer")
         loader = DataLoader(dataset, batch_size=inference_batch_size, shuffle=False, collate_fn=noop, **kwargs)
         inference(args, loader, model, trainTransform)
         return
@@ -222,38 +239,44 @@ def main():
     # trainSet = dset.LUNA16(root='luna16', images=ct_images, targets=ct_targets,
     #                        mode="train", transform=trainTransform,
     #                        class_balance=class_balance, split=target_split, seed=args.seed, masks=masks)
-    trainSet = LUNA16(root=r'/home/aistudio/work', images=ct_images, targets=ct_targets,
+    trainSet = LUNA16(root=r'G:\LUNA16', images=ct_images, targets=ct_targets,
                       mode="train", transform=trainTransform,
                       class_balance=class_balance, split=target_split, seed=args.seed, masks=masks)
     # import pdb
     # pdb.set_trace()
-    trainLoader = DataLoader(trainSet, batch_size=batch_size, shuffle=True, **kwargs)
+    # trainLoader = DataLoader(trainSet, batch_size=batch_size, shuffle=True, **kwargs)
+    train_sampler = paddle.io.DistributedBatchSampler(trainSet, batch_size=args.batchSz,shuffle=True)
+    trainLoader = DataLoader(trainSet,batch_sampler=train_sampler, **kwargs)
 
-    print("loading test set")
-    testLoader = DataLoader(
-        LUNA16(root=r'/home/aistudio/work', images=ct_images, targets=ct_targets,
-               mode="test", transform=testTransform, seed=args.seed, masks=masks, split=target_split),
-        batch_size=batch_size, shuffle=True, **kwargs)
+    print("loading eval set")
+    # evalLoader = DataLoader(
+    #     LUNA16(root=r'/home/aistudio/work', images=ct_images, targets=ct_targets,
+    #            mode="eval", transform=evalTransform, seed=args.seed, masks=masks, split=target_split),
+    #     batch_size=batch_size, shuffle=True, **kwargs)
+    evalSet=LUNA16(root=r'G:\LUNA16', images=ct_images, targets=ct_targets,
+                mode="eval", transform=evalTransform, seed=args.seed, masks=masks, split=target_split)
+    eval_sampler = paddle.io.DistributedBatchSampler(evalSet, batch_size=args.batchSz, shuffle=True)
+    evalLoader= DataLoader(evalSet,batch_sampler=eval_sampler, **kwargs)
 
-    target_mean = trainSet.target_mean()
-    bg_weight = target_mean / (1. + target_mean)
-    fg_weight = 1. - bg_weight
+    # target_mean = trainSet.target_mean()
+    # bg_weight = target_mean / (1. + target_mean)
+    # fg_weight = 1. - bg_weight
     # print(bg_weight)
     # class_weights = torch.FloatTensor([bg_weight, fg_weight])
-    class_weights = paddle.to_tensor([bg_weight, fg_weight])
-
+    # class_weights = paddle.to_tensor([bg_weight, fg_weight])
+    class_weights = []
     # import pdb
     # pdb.set_trace()
 
     trainF = open(os.path.join(args.save, 'train.csv'), 'w')
-    testF = open(os.path.join(args.save, 'test.csv'), 'w')
+    evalF = open(os.path.join(args.save, 'eval.csv'), 'w')
     best_epoch = 0
     err_best = 100.
     for epoch in range(args.start_epoch + 1, args.nEpochs + 1):
         log_writer = LogWriter(os.path.join(args.save, "epoch" + str(epoch)))
         adjust_opt(args.opt, optimizer, epoch)
-        train(args, epoch, model, trainLoader, optimizer, trainF, class_weights, log_writer)
-        err = test(args, epoch, model, testLoader, optimizer, testF, class_weights, log_writer)
+        # train(args, epoch, model, trainLoader, optimizer, trainF, class_weights, log_writer)
+        err = eval(args, epoch, model, evalLoader, optimizer, evalF, class_weights, log_writer)
         is_best = False
         # import pdb
         # pdb.set_trace()
@@ -271,7 +294,7 @@ def main():
         log_writer.close()
 
     trainF.close()
-    testF.close()
+    evalF.close()
 
 
 def train_dice(args, epoch, model, trainLoader, optimizer, trainF, weights, log_writer):
@@ -287,11 +310,13 @@ def train_dice(args, epoch, model, trainLoader, optimizer, trainF, weights, log_
         optimizer.step()
         nProcessed += len(data)
         Dice_coefficient = 100. * (1. - loss.item())
-        error_rate = 100. * utils.error_rate(output, target)
+        error_rate=(1-paddle.metric.accuracy(output.transpose([0, 2, 3, 4, 1]).reshape([-1,2]),target.reshape([-1,1]),k=1))*100.
+        # error_rate = 100. * utils.error_rate(output, target)
         partialEpoch = epoch + batch_idx / len(trainLoader) - 1
         print('Train Epoch: {:.2f} [{}/{} ({:.0f}%)]\tLoss: {:.8f}\tDice_coefficient:: {:.8f}%\tErrorRate:{}%'.format(
             partialEpoch, nProcessed, nTrain, 100. * batch_idx / len(trainLoader),
             loss.item(), Dice_coefficient, error_rate))
+
         log_writer.add_text('TrainInfo',
                             'Train Epoch: {:.2f} [{}/{} ({:.0f}%)]\tLoss: {:.8f}\tDice_coefficient:: {:.8f}%\tErrorRate:{}%'.format(
                                 partialEpoch, nProcessed, nTrain, 100. * batch_idx / len(trainLoader),
@@ -301,33 +326,37 @@ def train_dice(args, epoch, model, trainLoader, optimizer, trainF, weights, log_
         trainF.flush()
 
 
-def test_dice(args, epoch, model, testLoader, optimizer, testF, weights, log_writer):
+def eval_dice(args, epoch, model, evalLoader, optimizer, evalF, weights, log_writer):
     model.eval()
-    test_loss = 0
+    eval_loss = 0
     incorrect = 0
     Dice_coefficient = 0
     error_rate = 0
-    for data, target in testLoader:
+    # import pdb
+    # pdb.set_trace()
+    for data, target in evalLoader:
+        # print(data)
         output = model(data)
         # import pdb
         # pdb.set_trace()
         loss = utils.my_dice_loss(output, target).item()
+        print("loss:{}".format(loss))
 
-        test_loss += loss
+        eval_loss += loss
         Dice_coefficient += (1. - loss)
         error_rate += utils.error_rate(output, target)
 
-    test_loss /= len(testLoader)  # loss function already averages over batch size
-    nTotal = len(testLoader)
+    eval_loss /= len(evalLoader)  # loss function already averages over batch size
+    nTotal = len(evalLoader)
     Dice_coefficient = 100. * Dice_coefficient / nTotal
     error_rate = 100. * error_rate / nTotal
-    print('\nTest set: Average test_loss: {:.4f}, Dice_coefficient: {}/{} ({:.0f}%),ErrorRate:{}%\n'.format(
-        test_loss, incorrect, nTotal, Dice_coefficient, error_rate))
-    log_writer.add_text('TestInfo',
-                        '\nTest set: Average test_loss: {:.4f}, Dice_coefficient: {}/{} ({:.0f}%),ErrorRate:{}%\n'.format(
-                            test_loss, incorrect, nTotal, Dice_coefficient, error_rate))
-    testF.write('{},{},{},{}\n'.format(epoch, test_loss, Dice_coefficient, error_rate))
-    testF.flush()
+    print('\nEval set: Average eval_loss: {:.4f}, Dice_coefficient: {}/{} ({:.0f}%),ErrorRate:{}%\n'.format(
+        eval_loss, incorrect, nTotal, Dice_coefficient, error_rate))
+    log_writer.add_text('EvalInfo',
+                        '\nEval set: Average eval_loss: {:.4f}, Dice_coefficient: {}/{} ({:.0f}%),ErrorRate:{}%\n'.format(
+                            eval_loss, incorrect, nTotal, Dice_coefficient, error_rate))
+    evalF.write('{},{},{},{}\n'.format(epoch, eval_loss, Dice_coefficient, error_rate))
+    evalF.flush()
     return error_rate
 
 

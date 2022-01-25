@@ -7,8 +7,8 @@ import SimpleITK as sitk
 from paddle.io import Dataset
 import utils
 
-MIN_BOUND = -1200
-MAX_BOUND = 600
+MIN_BOUND = -1000
+MAX_BOUND = 400
 # target_shape=[64,128,128]
 target_shape = [64, 128, 128]
 target_spatial_resoluton = [1, 1, 1.5]
@@ -157,7 +157,7 @@ def make_dataset(dir, images, targets, seed, train, class_balance, partition, no
         label_list.append(os.path.basename(name)[:-4])
     # for name in image_files:
     #     label_list.append(os.path.basename(name)[:-4])
-
+    print("label_list.len:{}".format(len(label_list)))
     if len(test_split) == 0:
         zero_tensor = np.zeros(target_shape, dtype=np.uint8)
         image_list = []
@@ -174,13 +174,15 @@ def make_dataset(dir, images, targets, seed, train, class_balance, partition, no
         full = set(image_list)
         positives = set(label_list) & full
         train_split, test_split = train_test_split(full, positives, test_fraction)
+        print("train_split:{}".format(len(train_split)))
+        print("test_split:{}".format(len(test_split)))
     if train:
         keys = train_split
     else:
         keys = test_split
 
     result = []
-    target_means = []
+    # target_means = []
     for index in range(len(keys)):
 
         sample_label = load_label(label_path, keys[index])
@@ -208,10 +210,10 @@ def make_dataset(dir, images, targets, seed, train, class_balance, partition, no
             if nonempty:
                 if np.sum(utils.get_subvolume(sample_label, part)) == 0:
                     continue
-            target_means.append(np.mean(sample_label))
+            # target_means.append(np.mean(sample_label))
             result.append((keys[index], part))
-    target_mean = np.mean(target_means)
-    return (result, target_mean)
+    # target_mean = np.mean(target_means)
+    return result
 
 
 class LUNA16(Dataset):
@@ -225,9 +227,9 @@ class LUNA16(Dataset):
         if mode == "infer":
             imgs = full_dataset(root, images)
         else:
-            imgs, target_mean = make_dataset(root, images, targets, seed, mode, class_balance, split, nonempty,
-                                             test_fraction, mode)
-            self.data_mean = target_mean
+            imgs = make_dataset(root, images, targets, seed, mode, class_balance, split, nonempty,
+                                test_fraction, mode)
+            # self.data_mean = target_mean
         if len(imgs) == 0:
             raise (RuntimeError("Found 0 images: " + os.path.join(root, images) + "\n"))
 
@@ -250,7 +252,7 @@ class LUNA16(Dataset):
         return self.data_mean
 
     def __getitem__(self, index):
-        if self.mode == "train" or self.mode == "test":
+        if self.mode == "train" or self.mode == "eval":
             return self.__getitem_dev(index)
         elif self.mode == "infer":
             return self.__getitem_prod(index)
@@ -295,11 +297,21 @@ class LUNA16(Dataset):
             image += MIN_BOUND
         # image = image.reshape((1, ze-zs, ye-ys, xe-xs))
         image = image.reshape((ze - zs, ye - ys, xe - xs))
-        img = image.astype(np.float32)
+        image = image.astype(np.float32)
         # 这里进行deform变换处理，只给训练的时deform变幻，测试的时候不做数据增强变幻
         if self.mode == "train":
-            img, target = utils.produceRandomlyDeformedImage(img, target, 2, 15)
+            if np.random.rand(1)[0] > 0.2:
+                img, target = utils.produceRandomlyDeformedImage(image, target, 2, 15)
+                # print("用了deform。。。。。。。。")
+                if np.isnan(img).any():
+                    print("抓到一个变换后的脏数据")
+                    img = image
+            else:
+                img = image
+        else:
+            img = image
 
+        img = truncate(img, MIN_BOUND, MAX_BOUND)
         img = paddle.to_tensor(img)
         target = paddle.to_tensor(target.astype(np.int64))
         if self.transform is not None:

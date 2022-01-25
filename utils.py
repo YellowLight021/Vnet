@@ -2,11 +2,14 @@ import SimpleITK as sitk
 import paddle
 import os.path
 import matplotlib.pyplot as plt
+# import torch.nn
 from skimage import measure, morphology
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 import numpy as np
 import scipy.ndimage
 import paddle.nn.functional as F
+import paddle.fluid as fluid
+from paddle.fluid.layers import one_hot,reduce_sum,reduce_mean
 Z_MAX = None
 Y_MAX = None
 X_MAX = None
@@ -82,11 +85,57 @@ def error_rate(output,target):
     # pdb.set_trace()
     return error_rate.item()
 
+
+
+def paddle_dice_loss(output,target):
+    output = output.transpose([0, 2, 3, 4, 1]).reshape([-1,2])
+    # print(target.numel())
+    target=paddle.cast(target.reshape((target.numel(),)),"float32")
+    eps = 0.000001
+    # eps=0.00001
+    result_ = paddle.argmax(output,1)
+    result_ = paddle.cast(paddle.squeeze(result_),"float32")
+    # if input.is_cuda:
+    #     result = torch.cuda.FloatTensor(result_.size())
+    #     target_ = torch.cuda.FloatTensor(target.size())
+    # else:
+    #     result = torch.FloatTensor(result_.size())
+    #     target_ = torch.FloatTensor(target.size())
+    # result.copy_(result_.data)
+    # target_.copy_(target.data)
+    # target = target_
+    # print('reusult.shape:{}'.format(result.shape))
+    # print('target.shape:{}'.format(target.shape))
+    intersect = paddle.dot(result_, target)
+
+    result_sum = paddle.sum(result_)
+    target_sum = paddle.sum(target)
+    union = result_sum + target_sum + 2 * eps
+    # print('intersect:{}'.format(intersect))
+    # intersect = torch.max([eps, intersect])
+
+    # the target volume can be empty - so we still want to
+    # end up with a score of 1 if the result is 0/0
+    IoU = intersect / union
+    #    print('union: {:.3f}\t intersect: {:.6f}\t target_sum: {:.0f} IoU: result_sum: {:.0f} IoU {:.7f}'.format(
+    #        union, intersect, target_sum, result_sum, 2*IoU))
+    return 2 * IoU
+
 def my_dice_loss(output,target):
     output = output.transpose([0, 2, 3, 4, 1])
     target = target.unsqueeze(axis=1)
     target = target.transpose([0, 2, 3, 4, 1])
-    return F.dice_loss(output, target)
+    return dice_loss(output, target)
+def dice_loss(input, label, epsilon=0.000001, name=None):
+    label = paddle.fluid.layers.one_hot(label, depth=input.shape[-1])
+    reduce_dim = list(range(1, len(input.shape)))
+    inse = reduce_sum(input * label, dim=reduce_dim)
+    dice_denominator = reduce_sum(
+        input*input, dim=reduce_dim) + reduce_sum(
+            label*label, dim=reduce_dim)
+    dice_score = 1 - inse * 2 / paddle.clip(dice_denominator,epsilon)
+    return reduce_mean(dice_score)
+
 
 def init_dims3D(z, y, x, spacing):
     global Z_MAX, Y_MAX, X_MAX, vox_spacing, shape_max
@@ -279,66 +328,66 @@ def merge_image(image_list, partition):
 
 
 # Load the scans in given folder path
-def dicom_load_scan(path):
-    attr = {}
-    slices = [dicom.read_file(path + '/' + s) for s in os.listdir(path)]
-    slices.sort(key=lambda x: float(x.ImagePositionPatient[2]))
-
-    slices2 = []
-    prev = -1000000
-    # remove redundant slices
-    for slice in slices:
-        cur = slice.ImagePositionPatient[2]
-        if cur == prev:
-            continue
-        prev = cur
-        slices2.append(slice)
-    slices = slices2
-
-    for i in range(len(slices) - 1):
-        try:
-            slice_thickness = np.abs(slices[i].ImagePositionPatient[2] - slices[i + 1].ImagePositionPatient[2])
-        except:
-            slice_thickness = np.abs(slices[i].SliceLocation - slices[i + 1].SliceLocation)
-        if slice_thickness != 0:
-            break
-
-    print('patient: {} slice: {}'.format(os.path.basename(path), slice_thickness))
-
-    assert slice_thickness != 0
-
-    for s in slices:
-        s.SliceThickness = slice_thickness
-
-    x, y = slices[0].PixelSpacing
-    attr['Spacing'] = (x, y, slice_thickness)
-    attr['Origin'] = slices[0].ImagePositionPatient
-
-    return (slices, attr)
-
-
-def dicom_get_pixels_hu(slices):
-    image = np.stack([s.pixel_array for s in slices])
-    image = image.astype(np.int16)
-
-    # Convert to Hounsfield units (HU)
-    for slice_number in range(len(slices)):
-
-        intercept = slices[slice_number].RescaleIntercept
-        slope = slices[slice_number].RescaleSlope
-
-        if slope != 1:
-            image[slice_number] = slope * image[slice_number].astype(np.float64)
-            image[slice_number] = image[slice_number].astype(np.int16)
-
-        image[slice_number] += np.int16(intercept)
-
-    return np.array(image, dtype=np.int16)
+# def dicom_load_scan(path):
+#     attr = {}
+#     slices = [dicom.read_file(path + '/' + s) for s in os.listdir(path)]
+#     slices.sort(key=lambda x: float(x.ImagePositionPatient[2]))
+#
+#     slices2 = []
+#     prev = -1000000
+#     # remove redundant slices
+#     for slice in slices:
+#         cur = slice.ImagePositionPatient[2]
+#         if cur == prev:
+#             continue
+#         prev = cur
+#         slices2.append(slice)
+#     slices = slices2
+#
+#     for i in range(len(slices) - 1):
+#         try:
+#             slice_thickness = np.abs(slices[i].ImagePositionPatient[2] - slices[i + 1].ImagePositionPatient[2])
+#         except:
+#             slice_thickness = np.abs(slices[i].SliceLocation - slices[i + 1].SliceLocation)
+#         if slice_thickness != 0:
+#             break
+#
+#     print('patient: {} slice: {}'.format(os.path.basename(path), slice_thickness))
+#
+#     assert slice_thickness != 0
+#
+#     for s in slices:
+#         s.SliceThickness = slice_thickness
+#
+#     x, y = slices[0].PixelSpacing
+#     attr['Spacing'] = (x, y, slice_thickness)
+#     attr['Origin'] = slices[0].ImagePositionPatient
+#
+#     return (slices, attr)
 
 
-def dicom_convert(src, dst):
-    for scandir in os.listdir(src):
-        slices, attr = dicom_load_scan(os.path.join(src, scandir))
-        image = dicom_get_pixels_hu(slices)
-        save_updated_image(image, os.path.join(dst, scandir + '.mhd'),
-                           attr['Origin'], attr['Spacing'])
+# def dicom_get_pixels_hu(slices):
+#     image = np.stack([s.pixel_array for s in slices])
+#     image = image.astype(np.int16)
+#
+#     # Convert to Hounsfield units (HU)
+#     for slice_number in range(len(slices)):
+#
+#         intercept = slices[slice_number].RescaleIntercept
+#         slope = slices[slice_number].RescaleSlope
+#
+#         if slope != 1:
+#             image[slice_number] = slope * image[slice_number].astype(np.float64)
+#             image[slice_number] = image[slice_number].astype(np.int16)
+#
+#         image[slice_number] += np.int16(intercept)
+#
+#     return np.array(image, dtype=np.int16)
+
+
+# def dicom_convert(src, dst):
+#     for scandir in os.listdir(src):
+#         slices, attr = dicom_load_scan(os.path.join(src, scandir))
+#         image = dicom_get_pixels_hu(slices)
+#         save_updated_image(image, os.path.join(dst, scandir + '.mhd'),
+#                            attr['Origin'], attr['Spacing'])
