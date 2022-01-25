@@ -24,6 +24,6 @@ if __name__=="__main__":
     # torch_loss=DiceLoss()(output.reshape(-1,2),target.view(target.numel()))
 
 
-    torch_loss=torchloss.dice_error(output.reshape(-1,2),target.view(target.numel()))
+    torch_loss=1.0-torchloss.dice_error(output.reshape(-1,2),target.view(target.numel()))
     # torch_loss.backward()
     print("my_loss:{},torch_loss:{},abs(my_loss-torch_loss):{}".format(my_loss,torch_loss,abs(my_loss-torch_loss)))

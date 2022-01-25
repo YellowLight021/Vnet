@@ -17,8 +17,6 @@ class InputTransition(nn.Layer):
         self.bn1=nn.BatchNorm3D(outchans)
         self.relu1=nn.PReLU()
     def forward(self,x):
-        # import pdb
-        # pdb.set_trace()
         out=self.relu1(self.bn1(self.conv1(x)))
         x16=paddle.concat([x,x,x,x,x,x,x,x,
                            x,x,x,x,x,x,x,x],1)
@@ -79,9 +77,7 @@ class OutputTransition(nn.Layer):
             self.softmax=F.softmax
     def forward(self, x):
         out=self.relu(self.bn1(self.conv1(x)))
-        # import pdb
-        # pdb.set_trace()
-        return self.softmax(out,axis=1)
+        return out,self.softmax(out,axis=1)
 
 
 
@@ -99,18 +95,29 @@ class VNet(nn.Layer):
         self.up_tr64 = UpTransition(128, 64, 1)
         self.up_tr32 = UpTransition(64, 32, 1)
         self.out_tr = OutputTransition(32,nll)
+        # self.out_dict={}
 
     def forward(self,x):
         out16=self.in_tr(x)
+        # self.out_dict['out16']=out16
         out32=self.down_tr32(out16)
+        # self.out_dict['out32']=out32
         out64= self.down_tr64(out32)
+        # self.out_dict['out64']=out64
         out128 = self.down_tr128(out64)
+        # self.out_dict['128']=out128
         out256 = self.down_tr256(out128)
+        # self.out_dict['256']=out256
         out=self.up_tr256(out256,out128)
+        # self.out_dict['out1']=out
         out = self.up_tr128(out, out64)
+        # self.out_dict['out2']=out
         out = self.up_tr64(out, out32)
+        # self.out_dict['out3']=out
         out = self.up_tr32(out, out16)
-        out = self.out_tr(out)
+        # self.out_dict['out4']=out
+        out05,out = self.out_tr(out)
+        # self.out_dict['out05']=out05
         return out
 
 if __name__=="__main__":

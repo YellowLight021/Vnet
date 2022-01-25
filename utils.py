@@ -3,25 +3,28 @@ import paddle
 import os.path
 import matplotlib.pyplot as plt
 # import torch.nn
-from skimage import measure, morphology
+# from skimage import measure, morphology
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 import numpy as np
 import scipy.ndimage
 import paddle.nn.functional as F
 import paddle.fluid as fluid
-from paddle.fluid.layers import one_hot,reduce_sum,reduce_mean
+from paddle.fluid.layers import one_hot, reduce_sum, reduce_mean
+
 Z_MAX = None
 Y_MAX = None
 X_MAX = None
 vox_spacing = None
 shape_max = None
 
+
 def produceRandomlyTranslatedImage(image, label):
     sitkImage = sitk.GetImageFromArray(image, isVector=False)
     sitklabel = sitk.GetImageFromArray(label, isVector=False)
 
     itemindex = np.where(label > 0)
-    randTrans = (0,np.random.randint(-np.min(itemindex[1])/2,(image.shape[1]-np.max(itemindex[1]))/2),np.random.randint(-np.min(itemindex[0])/2,(image.shape[0]-np.max(itemindex[0]))/2))
+    randTrans = (0, np.random.randint(-np.min(itemindex[1]) / 2, (image.shape[1] - np.max(itemindex[1])) / 2),
+                 np.random.randint(-np.min(itemindex[0]) / 2, (image.shape[0] - np.max(itemindex[0])) / 2))
     translation = sitk.TranslationTransform(3, randTrans)
 
     resampler = sitk.ResampleImageFilter()
@@ -41,23 +44,23 @@ def produceRandomlyTranslatedImage(image, label):
 
     return outimg, outlbl
 
+
 def produceRandomlyDeformedImage(image, label, numcontrolpoints, stdDef):
-    sitkImage=sitk.GetImageFromArray(image, isVector=False)
-    sitklabel=sitk.GetImageFromArray(label, isVector=False)
+    sitkImage = sitk.GetImageFromArray(image, isVector=False)
+    sitklabel = sitk.GetImageFromArray(label, isVector=False)
 
-    transfromDomainMeshSize=[numcontrolpoints]*sitkImage.GetDimension()
+    transfromDomainMeshSize = [numcontrolpoints] * sitkImage.GetDimension()
 
-    tx = sitk.BSplineTransformInitializer(sitkImage,transfromDomainMeshSize)
-
+    tx = sitk.BSplineTransformInitializer(sitkImage, transfromDomainMeshSize)
 
     params = tx.GetParameters()
 
-    paramsNp=np.asarray(params,dtype=float)
-    paramsNp = paramsNp + np.random.randn(paramsNp.shape[0])*stdDef
+    paramsNp = np.asarray(params, dtype=float)
+    paramsNp = paramsNp + np.random.randn(paramsNp.shape[0]) * stdDef
 
-    paramsNp[0:int(len(params)/3)]=0 #remove z deformations! The resolution in z is too bad
+    paramsNp[0:int(len(params) / 3)] = 0  # remove z deformations! The resolution in z is too bad
 
-    params=tuple(paramsNp)
+    params = tuple(paramsNp)
     tx.SetParameters(params)
 
     resampler = sitk.ResampleImageFilter()
@@ -74,27 +77,31 @@ def produceRandomlyDeformedImage(image, label, numcontrolpoints, stdDef):
     outimg = outimg.astype(dtype=np.float32)
 
     outlbl = sitk.GetArrayFromImage(outlabsitk)
-    outlbl = (outlbl>0.5).astype(dtype=np.float32)
+    outlbl = (outlbl > 0.5).astype(dtype=np.float32)
+    if np.inf in outimg:
+        print("img:{}".format(image))
+        print('outimg:{}'.format(outimg))
+        return image, label
 
-    return outimg,outlbl
+    return outimg, outlbl
 
-def error_rate(output,target):
-    out=paddle.argmax(output,axis=1)
-    error_rate=1-(1.0*paddle.sum(out==target))/target.size
+
+def error_rate(output, target):
+    out = paddle.argmax(output, axis=1)
+    error_rate = 1 - (1.0 * paddle.sum(out == target)) / target.size
     # import pdb
     # pdb.set_trace()
     return error_rate.item()
 
 
-
-def paddle_dice_loss(output,target):
-    output = output.transpose([0, 2, 3, 4, 1]).reshape([-1,2])
+def paddle_dice_loss(output, target):
+    output = output.transpose([0, 2, 3, 4, 1]).reshape([-1, 2])
     # print(target.numel())
-    target=paddle.cast(target.reshape((target.numel(),)),"float32")
+    target = paddle.cast(target.reshape((target.numel(),)), "float32")
     eps = 0.000001
     # eps=0.00001
-    result_ = paddle.argmax(output,1)
-    result_ = paddle.cast(paddle.squeeze(result_),"float32")
+    result_ = paddle.argmax(output, 1)
+    result_ = paddle.cast(paddle.squeeze(result_), "float32")
     # if input.is_cuda:
     #     result = torch.cuda.FloatTensor(result_.size())
     #     target_ = torch.cuda.FloatTensor(target.size())
@@ -119,21 +126,24 @@ def paddle_dice_loss(output,target):
     IoU = intersect / union
     #    print('union: {:.3f}\t intersect: {:.6f}\t target_sum: {:.0f} IoU: result_sum: {:.0f} IoU {:.7f}'.format(
     #        union, intersect, target_sum, result_sum, 2*IoU))
-    return 2 * IoU
+    return 1.0 - 2 * IoU
 
-def my_dice_loss(output,target):
+
+def my_dice_loss(output, target):
     output = output.transpose([0, 2, 3, 4, 1])
     target = target.unsqueeze(axis=1)
     target = target.transpose([0, 2, 3, 4, 1])
-    return dice_loss(output, target)
+    return F.dice_loss(output, target)
+
+
 def dice_loss(input, label, epsilon=0.000001, name=None):
     label = paddle.fluid.layers.one_hot(label, depth=input.shape[-1])
     reduce_dim = list(range(1, len(input.shape)))
     inse = reduce_sum(input * label, dim=reduce_dim)
     dice_denominator = reduce_sum(
-        input*input, dim=reduce_dim) + reduce_sum(
-            label*label, dim=reduce_dim)
-    dice_score = 1 - inse * 2 / paddle.clip(dice_denominator,epsilon)
+        input * input, dim=reduce_dim) + reduce_sum(
+        label * label, dim=reduce_dim)
+    dice_score = 1 - inse * 2 / paddle.clip(dice_denominator, epsilon)
     return reduce_mean(dice_score)
 
 
@@ -325,7 +335,6 @@ def merge_image(image_list, partition):
             y_list.append(np.concatenate(x_list, axis=2))
         z_list.append(np.concatenate(y_list, axis=1))
     return np.concatenate(z_list)
-
 
 # Load the scans in given folder path
 # def dicom_load_scan(path):
