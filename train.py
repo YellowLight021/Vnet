@@ -257,7 +257,7 @@ def main():
     #     batch_size=batch_size, shuffle=True, **kwargs)
     evalSet = LUNA16(root=r'./', images=ct_images, targets=ct_targets,
                      mode="eval", transform=evalTransform, seed=args.seed, masks=masks, split=target_split)
-    eval_sampler = paddle.io.DistributedBatchSampler(evalSet, batch_size=batch_size, shuffle=True)
+    eval_sampler = paddle.io.DistributedBatchSampler(evalSet, batch_size=batch_size, shuffle=False)
     evalLoader = DataLoader(evalSet, batch_sampler=eval_sampler, **kwargs)
 
     # target_mean = trainSet.target_mean()
