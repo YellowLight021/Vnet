@@ -36,6 +36,6 @@ B：可以clone下当前github的repo。(确保本地有paddle2.2.0的框架版�
 > 4、我代码中本来是期望训练300个epoch的，但是根据日志训练了95个epoch就达到了98.5%的dice参数，论文要求是98.3%。目前还是希望能够继续训练完成看最终能达到什么样的状态
 > 5、因为是每次训练一个epoch我都会validation一次。如果只是想拿我提供的模型进行评估可以直接将train.py文件下的main函数在for epoch的时候把train的调用给注释掉就可以了，这样每次都是validation看性能
 > 6、metric_align.py是metric对齐脚本，测试了一下和官方给到的dice计算是能够对齐的。
-> 日志文件和checkpoint文件我都会上传百度网盘链接：https://pan.baidu.com/s/1xA0CrZeOMaqgp24v5gZWeQ 
-提取码：7sdi 
+> 日志文件和checkpoint文件我都会上传百度网盘链接：链接：https://pan.baidu.com/s/1aI3CrxmypVLCLPJAUTzPpg 
+提取码：qyvl 
 --来自百度网盘超级会员V6的分享
