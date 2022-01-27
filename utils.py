@@ -137,13 +137,16 @@ def my_dice_loss(output, target):
 
 
 def dice_loss(input, label, epsilon=0.000001, name=None):
+    input = input.transpose([0, 2, 3, 4, 1])
+    label = label.unsqueeze(axis=1)
+    label = label.transpose([0, 2, 3, 4, 1])
     label = paddle.fluid.layers.one_hot(label, depth=input.shape[-1])
     reduce_dim = list(range(1, len(input.shape)))
     inse = reduce_sum(input * label, dim=reduce_dim)
     dice_denominator = reduce_sum(
-        input * input, dim=reduce_dim) + reduce_sum(
-        label * label, dim=reduce_dim)
-    dice_score = 1 - inse * 2 / paddle.clip(dice_denominator, epsilon)
+        input*input, dim=reduce_dim) + reduce_sum(
+            label*label, dim=reduce_dim)
+    dice_score = 1 - inse * 2 / paddle.clip(dice_denominator,epsilon)
     return reduce_mean(dice_score)
 
 
