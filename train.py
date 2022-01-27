@@ -326,7 +326,7 @@ def train_dice(args, epoch, model, trainLoader, optimizer, weights):
             continue
         optimizer.clear_grad()
         output = model(data)
-        loss = utils.my_dice_loss(output, target)
+        loss = utils.dice_loss(output, target)
         # make_graph.save('/tmp/t.dot', loss.creator); assert(False)
 
         nProcessed += len(data)
