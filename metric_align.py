@@ -17,6 +17,7 @@ def gen_fake_data():
 if __name__=="__main__":
 
     output,target=gen_fake_data()
+    my_loss001=utils.dice_loss(paddle.to_tensor(output),paddle.to_tensor(target)).item()
     my_loss=utils.paddle_dice_loss(paddle.to_tensor(output),paddle.to_tensor(target)).item()
     print(my_loss)
     target=torch.as_tensor(target)
