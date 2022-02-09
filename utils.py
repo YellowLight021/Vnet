@@ -95,6 +95,9 @@ def error_rate(output, target):
 
 
 def paddle_dice_loss(output, target):
+    # import pdb
+    # pdb.set_trace
+    output=output[:,:,:target.shape[1],:]
     output = output.transpose([0, 2, 3, 4, 1]).reshape([-1, 2])
     # print(target.numel())
     target = paddle.cast(target.reshape((target.numel(),)), "float32")
@@ -137,6 +140,7 @@ def my_dice_loss(output, target):
 
 
 def dice_loss(input, label, epsilon=0.000001, name=None):
+    input=input[:,:,:label.shape[1],:]
     input = input.transpose([0, 2, 3, 4, 1])
     label = label.unsqueeze(axis=1)
     label = label.transpose([0, 2, 3, 4, 1])

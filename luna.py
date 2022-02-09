@@ -163,6 +163,8 @@ def make_dataset(dir, images, targets, seed, train, class_balance, partition, no
         image_list = []
         image_path = os.path.join(dir, images)
         file_list = glob(image_path + "/*.mhd")
+        # import pdb
+        # pdb.set_trace()
         for img_file in file_list:
             series = os.path.basename(img_file)[:-4]
             if series not in label_list:
@@ -180,7 +182,8 @@ def make_dataset(dir, images, targets, seed, train, class_balance, partition, no
         keys = train_split
     else:
         keys = test_split
-
+    # import pdb
+    # pdb.set_trace()
     result = []
     # target_means = []
     for index in range(len(keys)):
@@ -202,8 +205,8 @@ def make_dataset(dir, images, targets, seed, train, class_balance, partition, no
                     for x_start in range(0, x, x_target):
                         if (x_start + x_target > x):
                             x_start = x - x_target
-                        part_list.append(((z_start, z_start + z_target), (y_start, y_start + y_target),
-                                          (x_start, x_start + x_target)))
+                        part_list.append(((max(z_start, 0), z_start + z_target), (max(y_start, 0), y_start + y_target),
+                                          (max(x_start, 0), x_start + x_target)))
         else:
             part_list = [((0, z), (0, y), (0, x))]
         for part in part_list:
@@ -219,7 +222,7 @@ def make_dataset(dir, images, targets, seed, train, class_balance, partition, no
 class LUNA16(Dataset):
     def __init__(self, root='.', images=None, targets=None, transform=None, mode="train", seed=1,
                  class_balance=False, split=None, masks=None, nonempty=True,
-                 test_fraction=0.3):
+                 test_fraction=0.2):
         if images is None:
             raise (RuntimeError("images must be set"))
         if targets is None and mode != "infer":
@@ -229,6 +232,8 @@ class LUNA16(Dataset):
         else:
             imgs = make_dataset(root, images, targets, seed, mode, class_balance, split, nonempty,
                                 test_fraction, mode)
+            # import pdb
+            # pdb.set_trace()
             # self.data_mean = target_mean
         if len(imgs) == 0:
             raise (RuntimeError("Found 0 images: " + os.path.join(root, images) + "\n"))
@@ -277,6 +282,8 @@ class LUNA16(Dataset):
         series, bounds = self.imgs[index]
         # print('series:{},bounds:{}'.format(series,bounds))
         (zs, ze), (ys, ye), (xs, xe) = bounds
+        # import pdb
+        # pdb.set_trace()
         target = load_label(self.targets, series)
         target = target[zs:ze, ys:ye, xs:xe]
 
@@ -300,7 +307,7 @@ class LUNA16(Dataset):
         image = image.astype(np.float32)
         # 这里进行deform变换处理，只给训练的时deform变幻，测试的时候不做数据增强变幻
         if self.mode == "train":
-            if np.random.rand(1)[0] > 0.2:
+            if np.random.rand(1)[0] > 0.3:
                 img, target = utils.produceRandomlyDeformedImage(image, target, 2, 15)
                 # print("用了deform。。。。。。。。")
                 if np.isnan(img).any():
@@ -314,6 +321,17 @@ class LUNA16(Dataset):
         img = truncate(img, MIN_BOUND, MAX_BOUND)
         img = paddle.to_tensor(img)
         target = paddle.to_tensor(target.astype(np.int64))
+        # import pdb
+        # pdb.set_trace()
+        if img.shape[0] < target_shape[0]:
+            padding_zero = paddle.zeros([target_shape[0] - img.shape[0], target_shape[1], target_shape[2]],
+                                        dtype='float32')
+            img = paddle.concat([img, padding_zero], axis=0)
+        if self.mode == 'train':
+            padding_zero = paddle.zeros([target_shape[0] - target.shape[0], target_shape[1], target_shape[2]],
+                                        dtype='int64')
+            target = paddle.concat([target, padding_zero], axis=0)
+
         if self.transform is not None:
             img = self.transform(img)
             # target不需要归一化操作

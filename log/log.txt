@@ -1,0 +1,576 @@
+/opt/conda/envs/python35-paddle120-env/lib/python3.7/site-packages/matplotlib/__init__.py:107: DeprecationWarning: Using or importing the ABCs from 'collections' instead of from 'collections.abc' is deprecated, and in 3.8 it will stop working
+  from collections import MutableMapping
+/opt/conda/envs/python35-paddle120-env/lib/python3.7/site-packages/matplotlib/rcsetup.py:20: DeprecationWarning: Using or importing the ABCs from 'collections' instead of from 'collections.abc' is deprecated, and in 3.8 it will stop working
+  from collections import Iterable, Mapping
+/opt/conda/envs/python35-paddle120-env/lib/python3.7/site-packages/matplotlib/colors.py:53: DeprecationWarning: Using or importing the ABCs from 'collections' instead of from 'collections.abc' is deprecated, and in 3.8 it will stop working
+  from collections import Sized
+2022-02-09 11:35:51,569-INFO: [topology.py:169:__init__] HybridParallelInfo: rank_id: 0, mp_degree: 1, sharding_degree: 1, pp_degree: 1, dp_degree: 1, mp_group: [0],  sharding_group: [0], pp_group: [0], dp_group: [0], check/clip group: [0]
+build vnet
+W0209 11:35:51.571310 15669 device_context.cc:447] Please NOTE: device: 0, GPU Compute Capability: 7.0, Driver API Version: 10.1, Runtime API Version: 10.1
+W0209 11:35:51.576756 15669 device_context.cc:465] device: 0, cuDNN Version: 7.6.
+loading training set
+label_list.len:50
+train_split:40
+train_split:['Case41', 'Case08', 'Case28', 'Case05', 'Case40', 'Case44', 'Case47', 'Case34', 'Case23', 'Case07', 'Case37', 'Case26', 'Case36', 'Case22', 'Case21', 'Case09', 'Case03', 'Case10', 'Case20', 'Case16', 'Case15', 'Case38', 'Case04', 'Case29', 'Case42', 'Case19', 'Case43', 'Case02', 'Case45', 'Case14', 'Case46', 'Case27', 'Case49', 'Case48', 'Case06', 'Case31', 'Case01', 'Case32', 'Case30', 'Case00']
+test_split:10
+test_split:['Case13', 'Case35', 'Case33', 'Case12', 'Case39', 'Case24', 'Case18', 'Case25', 'Case11', 'Case17']
+loading eval set
+label_list.len:50
+/opt/conda/envs/python35-paddle120-env/lib/python3.7/site-packages/paddle/fluid/dygraph/math_op_patch.py:253: UserWarning: The dtype of left and right variables are not the same, left dtype is paddle.float32, but right dtype is paddle.int64, the right dtype will convert to paddle.float32
+  format(lhs_dtype, rhs_dtype, lhs_dtype))
+/opt/conda/envs/python35-paddle120-env/lib/python3.7/site-packages/paddle/nn/layer/norm.py:653: UserWarning: When training, we now always track global mean and variance.
+  "When training, we now always track global mean and variance.")
+Train Epoch: 0.00 [8/196 (0%)]	Loss: 0.35685152	Dice_coefficient:: 64.31484818%	ErrorRate:49.61040019989014%  time:2022-02-09 11:36:05
+Train Epoch: 0.04 [16/196 (4%)]	Loss: 0.35765547	Dice_coefficient:: 64.23445344%	ErrorRate:50.38653612136841%  time:2022-02-09 11:36:12
+Train Epoch: 0.08 [24/196 (8%)]	Loss: 0.35566866	Dice_coefficient:: 64.43313360%	ErrorRate:49.45180416107178%  time:2022-02-09 11:36:18
+Train Epoch: 0.12 [32/196 (12%)]	Loss: 0.35688609	Dice_coefficient:: 64.31139112%	ErrorRate:49.63446855545044%  time:2022-02-09 11:36:26
+Train Epoch: 0.17 [40/196 (17%)]	Loss: 0.35594118	Dice_coefficient:: 64.40588236%	ErrorRate:49.52738285064697%  time:2022-02-09 11:36:33
+Train Epoch: 0.21 [48/196 (21%)]	Loss: 0.35656875	Dice_coefficient:: 64.34312463%	ErrorRate:49.76855516433716%  time:2022-02-09 11:36:41
+Train Epoch: 0.25 [56/196 (25%)]	Loss: 0.35496330	Dice_coefficient:: 64.50366974%	ErrorRate:48.89782667160034%  time:2022-02-09 11:36:50
+Train Epoch: 0.29 [64/196 (29%)]	Loss: 0.35535043	Dice_coefficient:: 64.46495652%	ErrorRate:49.72982406616211%  time:2022-02-09 11:36:57
+Train Epoch: 0.33 [72/196 (33%)]	Loss: 0.35344219	Dice_coefficient:: 64.65578079%	ErrorRate:48.775696754455566%  time:2022-02-09 11:37:05
+Train Epoch: 0.38 [80/196 (38%)]	Loss: 0.35224807	Dice_coefficient:: 64.77519274%	ErrorRate:48.325514793395996%  time:2022-02-09 11:37:14
+Train Epoch: 0.42 [88/196 (42%)]	Loss: 0.35302916	Dice_coefficient:: 64.69708383%	ErrorRate:48.445725440979004%  time:2022-02-09 11:37:26
+Train Epoch: 0.46 [96/196 (46%)]	Loss: 0.35047370	Dice_coefficient:: 64.95262980%	ErrorRate:47.934675216674805%  time:2022-02-09 11:37:35
+Train Epoch: 0.50 [104/196 (50%)]	Loss: 0.35037127	Dice_coefficient:: 64.96287286%	ErrorRate:48.051416873931885%  time:2022-02-09 11:37:41
+Train Epoch: 0.54 [112/196 (54%)]	Loss: 0.34693286	Dice_coefficient:: 65.30671418%	ErrorRate:46.99276685714722%  time:2022-02-09 11:37:48
+Train Epoch: 0.58 [120/196 (58%)]	Loss: 0.34703964	Dice_coefficient:: 65.29603601%	ErrorRate:47.13262319564819%  time:2022-02-09 11:37:55
+Train Epoch: 0.62 [128/196 (62%)]	Loss: 0.34792584	Dice_coefficient:: 65.20741582%	ErrorRate:48.276638984680176%  time:2022-02-09 11:38:03
+Train Epoch: 0.67 [136/196 (67%)]	Loss: 0.34270048	Dice_coefficient:: 65.72995186%	ErrorRate:46.39536142349243%  time:2022-02-09 11:38:11
+Train Epoch: 0.71 [144/196 (71%)]	Loss: 0.34141654	Dice_coefficient:: 65.85834622%	ErrorRate:45.16085386276245%  time:2022-02-09 11:38:18
+Train Epoch: 0.75 [152/196 (75%)]	Loss: 0.33810651	Dice_coefficient:: 66.18934870%	ErrorRate:44.629645347595215%  time:2022-02-09 11:38:27
+Train Epoch: 0.79 [160/196 (79%)]	Loss: 0.33923376	Dice_coefficient:: 66.07662439%	ErrorRate:44.47371959686279%  time:2022-02-09 11:38:37
+Train Epoch: 0.83 [168/196 (83%)]	Loss: 0.33715340	Dice_coefficient:: 66.28465950%	ErrorRate:43.837010860443115%  time:2022-02-09 11:38:43
+Train Epoch: 0.88 [176/196 (88%)]	Loss: 0.34000745	Dice_coefficient:: 65.99925458%	ErrorRate:47.04258441925049%  time:2022-02-09 11:38:49
+Train Epoch: 0.92 [184/196 (92%)]	Loss: 0.33529809	Dice_coefficient:: 66.47019088%	ErrorRate:45.213961601257324%  time:2022-02-09 11:38:56
+Train Epoch: 0.96 [192/196 (96%)]	Loss: 0.33181792	Dice_coefficient:: 66.81820750%	ErrorRate:43.69993209838867%  time:2022-02-09 11:39:03
+start test nEpochs:1
+
+Eval set: Average eval_loss: 0.4068, Dice_coefficient: 0/48 (59%,ErrorRate:69.70989163964987%)
+
+cost time is 193.18208932876587
+best_epoch is 1,best_dice :59.31870987%
+Train Epoch: 1.00 [8/196 (0%)]	Loss: 0.33245552	Dice_coefficient:: 66.75444841%	ErrorRate:44.27684545516968%  time:2022-02-09 11:39:23
+Train Epoch: 1.04 [16/196 (4%)]	Loss: 0.32763276	Dice_coefficient:: 67.23672450%	ErrorRate:42.24903583526611%  time:2022-02-09 11:39:30
+Train Epoch: 1.08 [24/196 (8%)]	Loss: 0.33177775	Dice_coefficient:: 66.82222486%	ErrorRate:46.528542041778564%  time:2022-02-09 11:39:39
+Train Epoch: 1.12 [32/196 (12%)]	Loss: 0.32562786	Dice_coefficient:: 67.43721366%	ErrorRate:41.70098304748535%  time:2022-02-09 11:39:46
+Train Epoch: 1.17 [40/196 (17%)]	Loss: 0.32553974	Dice_coefficient:: 67.44602621%	ErrorRate:43.165433406829834%  time:2022-02-09 11:39:55
+Train Epoch: 1.21 [48/196 (21%)]	Loss: 0.32210127	Dice_coefficient:: 67.78987348%	ErrorRate:42.616963386535645%  time:2022-02-09 11:40:03
+Train Epoch: 1.25 [56/196 (25%)]	Loss: 0.31929117	Dice_coefficient:: 68.07088256%	ErrorRate:40.035295486450195%  time:2022-02-09 11:40:08
+Train Epoch: 1.29 [64/196 (29%)]	Loss: 0.31659079	Dice_coefficient:: 68.34092140%	ErrorRate:40.054869651794434%  time:2022-02-09 11:40:16
+Train Epoch: 1.33 [72/196 (33%)]	Loss: 0.31635174	Dice_coefficient:: 68.36482584%	ErrorRate:40.97312688827515%  time:2022-02-09 11:40:24
+Train Epoch: 1.38 [80/196 (38%)]	Loss: 0.30970824	Dice_coefficient:: 69.02917624%	ErrorRate:38.943684101104736%  time:2022-02-09 11:40:29
+Train Epoch: 1.42 [88/196 (42%)]	Loss: 0.30711406	Dice_coefficient:: 69.28859353%	ErrorRate:37.9116415977478%  time:2022-02-09 11:40:36
+Train Epoch: 1.46 [96/196 (46%)]	Loss: 0.30818731	Dice_coefficient:: 69.18126941%	ErrorRate:40.48337936401367%  time:2022-02-09 11:40:44
+Train Epoch: 1.50 [104/196 (50%)]	Loss: 0.30663639	Dice_coefficient:: 69.33636069%	ErrorRate:39.35436010360718%  time:2022-02-09 11:40:54
+Train Epoch: 1.54 [112/196 (54%)]	Loss: 0.29983044	Dice_coefficient:: 70.01695633%	ErrorRate:36.27829551696777%  time:2022-02-09 11:41:04
+Train Epoch: 1.58 [120/196 (58%)]	Loss: 0.29857224	Dice_coefficient:: 70.14277577%	ErrorRate:36.26201152801514%  time:2022-02-09 11:41:16
+Train Epoch: 1.62 [128/196 (62%)]	Loss: 0.29046082	Dice_coefficient:: 70.95391750%	ErrorRate:32.87036418914795%  time:2022-02-09 11:41:26
+Train Epoch: 1.67 [136/196 (67%)]	Loss: 0.29909080	Dice_coefficient:: 70.09091973%	ErrorRate:40.04570245742798%  time:2022-02-09 11:41:32
+Train Epoch: 1.71 [144/196 (71%)]	Loss: 0.28710282	Dice_coefficient:: 71.28971815%	ErrorRate:33.22556018829346%  time:2022-02-09 11:41:40
+Train Epoch: 1.75 [152/196 (75%)]	Loss: 0.28651822	Dice_coefficient:: 71.34817839%	ErrorRate:34.18114185333252%  time:2022-02-09 11:41:49
+Train Epoch: 1.79 [160/196 (79%)]	Loss: 0.28681698	Dice_coefficient:: 71.31830156%	ErrorRate:35.89538335800171%  time:2022-02-09 11:41:55
+Train Epoch: 1.83 [168/196 (83%)]	Loss: 0.28202796	Dice_coefficient:: 71.79720402%	ErrorRate:33.2699179649353%  time:2022-02-09 11:42:04
+Train Epoch: 1.88 [176/196 (88%)]	Loss: 0.27874458	Dice_coefficient:: 72.12554216%	ErrorRate:32.87100791931152%  time:2022-02-09 11:42:12
+Train Epoch: 1.92 [184/196 (92%)]	Loss: 0.27123851	Dice_coefficient:: 72.87614942%	ErrorRate:30.06221055984497%  time:2022-02-09 11:42:21
+Train Epoch: 1.96 [192/196 (96%)]	Loss: 0.26654688	Dice_coefficient:: 73.34531248%	ErrorRate:28.87202501296997%  time:2022-02-09 11:42:30
+start test nEpochs:2
+
+Eval set: Average eval_loss: 0.3437, Dice_coefficient: 0/48 (66%,ErrorRate:48.48487668981155%)
+
+cost time is 203.20696663856506
+best_epoch is 2,best_dice :65.63111171%
+Train Epoch: 2.00 [8/196 (0%)]	Loss: 0.27157325	Dice_coefficient:: 72.84267545%	ErrorRate:31.961607933044434%  time:2022-02-09 11:42:46
+Train Epoch: 2.04 [16/196 (4%)]	Loss: 0.26403621	Dice_coefficient:: 73.59637916%	ErrorRate:28.679287433624268%  time:2022-02-09 11:42:54
+Train Epoch: 2.08 [24/196 (8%)]	Loss: 0.26796204	Dice_coefficient:: 73.20379615%	ErrorRate:30.581200122833252%  time:2022-02-09 11:43:03
+Train Epoch: 2.12 [32/196 (12%)]	Loss: 0.26083428	Dice_coefficient:: 73.91657233%	ErrorRate:28.415262699127197%  time:2022-02-09 11:43:12
+Train Epoch: 2.17 [40/196 (17%)]	Loss: 0.26151246	Dice_coefficient:: 73.84875417%	ErrorRate:29.036438465118408%  time:2022-02-09 11:43:19
+Train Epoch: 2.21 [48/196 (21%)]	Loss: 0.25321460	Dice_coefficient:: 74.67854023%	ErrorRate:25.925123691558838%  time:2022-02-09 11:43:29
+Train Epoch: 2.25 [56/196 (25%)]	Loss: 0.25274670	Dice_coefficient:: 74.72532988%	ErrorRate:26.357269287109375%  time:2022-02-09 11:43:36
+Train Epoch: 2.29 [64/196 (29%)]	Loss: 0.24371636	Dice_coefficient:: 75.62836409%	ErrorRate:23.565590381622314%  time:2022-02-09 11:43:46
+Train Epoch: 2.33 [72/196 (33%)]	Loss: 0.24578150	Dice_coefficient:: 75.42185038%	ErrorRate:24.013257026672363%  time:2022-02-09 11:43:54
+Train Epoch: 2.38 [80/196 (38%)]	Loss: 0.23757786	Dice_coefficient:: 76.24221444%	ErrorRate:21.316111087799072%  time:2022-02-09 11:44:01
+Train Epoch: 2.42 [88/196 (42%)]	Loss: 0.23624751	Dice_coefficient:: 76.37524903%	ErrorRate:20.47603130340576%  time:2022-02-09 11:44:09
+Train Epoch: 2.46 [96/196 (46%)]	Loss: 0.23977464	Dice_coefficient:: 76.02253556%	ErrorRate:22.738707065582275%  time:2022-02-09 11:44:17
+Train Epoch: 2.50 [104/196 (50%)]	Loss: 0.23517582	Dice_coefficient:: 76.48241818%	ErrorRate:21.38594388961792%  time:2022-02-09 11:44:25
+Train Epoch: 2.54 [112/196 (54%)]	Loss: 0.23255464	Dice_coefficient:: 76.74453557%	ErrorRate:20.860648155212402%  time:2022-02-09 11:44:33
+Train Epoch: 2.58 [120/196 (58%)]	Loss: 0.22348830	Dice_coefficient:: 77.65116990%	ErrorRate:18.235361576080322%  time:2022-02-09 11:44:41
+Train Epoch: 2.62 [128/196 (62%)]	Loss: 0.22534014	Dice_coefficient:: 77.46598572%	ErrorRate:19.335079193115234%  time:2022-02-09 11:44:49
+Train Epoch: 2.67 [136/196 (67%)]	Loss: 0.22056416	Dice_coefficient:: 77.94358432%	ErrorRate:17.70995855331421%  time:2022-02-09 11:44:55
+Train Epoch: 2.71 [144/196 (71%)]	Loss: 0.21941334	Dice_coefficient:: 78.05866599%	ErrorRate:17.807042598724365%  time:2022-02-09 11:45:04
+Train Epoch: 2.75 [152/196 (75%)]	Loss: 0.21566615	Dice_coefficient:: 78.43338549%	ErrorRate:17.112398147583008%  time:2022-02-09 11:45:09
+Train Epoch: 2.79 [160/196 (79%)]	Loss: 0.21481185	Dice_coefficient:: 78.51881534%	ErrorRate:16.991686820983887%  time:2022-02-09 11:45:18
+Train Epoch: 2.83 [168/196 (83%)]	Loss: 0.20459159	Dice_coefficient:: 79.54084128%	ErrorRate:14.724206924438477%  time:2022-02-09 11:45:28
+Train Epoch: 2.88 [176/196 (88%)]	Loss: 0.21918850	Dice_coefficient:: 78.08115035%	ErrorRate:17.681992053985596%  time:2022-02-09 11:45:34
+Train Epoch: 2.92 [184/196 (92%)]	Loss: 0.20881295	Dice_coefficient:: 79.11870480%	ErrorRate:16.244029998779297%  time:2022-02-09 11:45:42
+Train Epoch: 2.96 [192/196 (96%)]	Loss: 0.20212506	Dice_coefficient:: 79.78749424%	ErrorRate:14.821445941925049%  time:2022-02-09 11:45:52
+start test nEpochs:3
+
+Eval set: Average eval_loss: 0.2663, Dice_coefficient: 0/48 (73%,ErrorRate:25.366491327683132%)
+
+cost time is 199.4733419418335
+best_epoch is 3,best_dice :73.36545388%
+Train Epoch: 3.00 [8/196 (0%)]	Loss: 0.19157997	Dice_coefficient:: 80.84200323%	ErrorRate:13.02807331085205%  time:2022-02-09 11:46:12
+Train Epoch: 3.04 [16/196 (4%)]	Loss: 0.20017701	Dice_coefficient:: 79.98229861%	ErrorRate:14.18830156326294%  time:2022-02-09 11:46:22
+Train Epoch: 3.08 [24/196 (8%)]	Loss: 0.20429793	Dice_coefficient:: 79.57020700%	ErrorRate:14.521312713623047%  time:2022-02-09 11:46:33
+Train Epoch: 3.12 [32/196 (12%)]	Loss: 0.18996872	Dice_coefficient:: 81.00312799%	ErrorRate:12.554705142974854%  time:2022-02-09 11:46:41
+Train Epoch: 3.17 [40/196 (17%)]	Loss: 0.18124285	Dice_coefficient:: 81.87571466%	ErrorRate:11.639153957366943%  time:2022-02-09 11:46:51
+Train Epoch: 3.21 [48/196 (21%)]	Loss: 0.20266795	Dice_coefficient:: 79.73320484%	ErrorRate:12.530183792114258%  time:2022-02-09 11:46:59
+Train Epoch: 3.25 [56/196 (25%)]	Loss: 0.19220638	Dice_coefficient:: 80.77936172%	ErrorRate:12.047326564788818%  time:2022-02-09 11:47:03
+Train Epoch: 3.29 [64/196 (29%)]	Loss: 0.18681683	Dice_coefficient:: 81.31831735%	ErrorRate:11.966562271118164%  time:2022-02-09 11:47:12
+Train Epoch: 3.33 [72/196 (33%)]	Loss: 0.17456660	Dice_coefficient:: 82.54334033%	ErrorRate:10.890364646911621%  time:2022-02-09 11:47:22
+Train Epoch: 3.38 [80/196 (38%)]	Loss: 0.17683494	Dice_coefficient:: 82.31650591%	ErrorRate:10.941123962402344%  time:2022-02-09 11:47:30
+Train Epoch: 3.42 [88/196 (42%)]	Loss: 0.16963172	Dice_coefficient:: 83.03682804%	ErrorRate:10.009312629699707%  time:2022-02-09 11:47:39
+Train Epoch: 3.46 [96/196 (46%)]	Loss: 0.17114362	Dice_coefficient:: 82.88563788%	ErrorRate:10.295474529266357%  time:2022-02-09 11:47:49
+Train Epoch: 3.50 [104/196 (50%)]	Loss: 0.18133755	Dice_coefficient:: 81.86624497%	ErrorRate:9.585583209991455%  time:2022-02-09 11:47:56
+Train Epoch: 3.54 [112/196 (54%)]	Loss: 0.17019312	Dice_coefficient:: 82.98068792%	ErrorRate:9.987032413482666%  time:2022-02-09 11:48:03
+Train Epoch: 3.58 [120/196 (58%)]	Loss: 0.16835502	Dice_coefficient:: 83.16449821%	ErrorRate:10.303735733032227%  time:2022-02-09 11:48:12
+Train Epoch: 3.62 [128/196 (62%)]	Loss: 0.16447067	Dice_coefficient:: 83.55293274%	ErrorRate:9.113752841949463%  time:2022-02-09 11:48:19
+Train Epoch: 3.67 [136/196 (67%)]	Loss: 0.17194507	Dice_coefficient:: 82.80549347%	ErrorRate:10.07920503616333%  time:2022-02-09 11:48:27
+Train Epoch: 3.71 [144/196 (71%)]	Loss: 0.16227353	Dice_coefficient:: 83.77264738%	ErrorRate:9.018158912658691%  time:2022-02-09 11:48:37
+Train Epoch: 3.75 [152/196 (75%)]	Loss: 0.15797263	Dice_coefficient:: 84.20273662%	ErrorRate:8.550548553466797%  time:2022-02-09 11:48:46
+Train Epoch: 3.79 [160/196 (79%)]	Loss: 0.15899010	Dice_coefficient:: 84.10099000%	ErrorRate:9.155070781707764%  time:2022-02-09 11:48:55
+Train Epoch: 3.83 [168/196 (83%)]	Loss: 0.15248635	Dice_coefficient:: 84.75136459%	ErrorRate:7.849216461181641%  time:2022-02-09 11:49:04
+Train Epoch: 3.88 [176/196 (88%)]	Loss: 0.15023422	Dice_coefficient:: 84.97657776%	ErrorRate:7.525146007537842%  time:2022-02-09 11:49:12
+Train Epoch: 3.92 [184/196 (92%)]	Loss: 0.16724786	Dice_coefficient:: 83.27521384%	ErrorRate:6.448948383331299%  time:2022-02-09 11:49:18
+Train Epoch: 3.96 [192/196 (96%)]	Loss: 0.15215155	Dice_coefficient:: 84.78484452%	ErrorRate:6.962597370147705%  time:2022-02-09 11:49:27
+start test nEpochs:4
+
+Eval set: Average eval_loss: 0.2088, Dice_coefficient: 0/48 (79%,ErrorRate:14.571551357706388%)
+
+cost time is 211.47870802879333
+best_epoch is 4,best_dice :79.12123290%
+Train Epoch: 4.00 [8/196 (0%)]	Loss: 0.14735076	Dice_coefficient:: 85.26492417%	ErrorRate:6.805574893951416%  time:2022-02-09 11:49:46
+Train Epoch: 4.04 [16/196 (4%)]	Loss: 0.14644116	Dice_coefficient:: 85.35588384%	ErrorRate:6.7879557609558105%  time:2022-02-09 11:49:54
+Train Epoch: 4.08 [24/196 (8%)]	Loss: 0.15000866	Dice_coefficient:: 84.99913365%	ErrorRate:6.200110912322998%  time:2022-02-09 11:49:59
+Train Epoch: 4.12 [32/196 (12%)]	Loss: 0.14857268	Dice_coefficient:: 85.14273167%	ErrorRate:6.483292579650879%  time:2022-02-09 11:50:08
+Train Epoch: 4.17 [40/196 (17%)]	Loss: 0.14825642	Dice_coefficient:: 85.17435789%	ErrorRate:6.290674209594727%  time:2022-02-09 11:50:16
+Train Epoch: 4.21 [48/196 (21%)]	Loss: 0.13629371	Dice_coefficient:: 86.37062907%	ErrorRate:7.193505764007568%  time:2022-02-09 11:50:23
+Train Epoch: 4.25 [56/196 (25%)]	Loss: 0.14162658	Dice_coefficient:: 85.83734185%	ErrorRate:5.017459392547607%  time:2022-02-09 11:50:32
+Train Epoch: 4.29 [64/196 (29%)]	Loss: 0.14096549	Dice_coefficient:: 85.90345085%	ErrorRate:5.494451522827148%  time:2022-02-09 11:50:39
+Train Epoch: 4.33 [72/196 (33%)]	Loss: 0.12965274	Dice_coefficient:: 87.03472614%	ErrorRate:7.060718536376953%  time:2022-02-09 11:50:50
+Train Epoch: 4.38 [80/196 (38%)]	Loss: 0.12908298	Dice_coefficient:: 87.09170222%	ErrorRate:5.649518966674805%  time:2022-02-09 11:50:58
+Train Epoch: 4.42 [88/196 (42%)]	Loss: 0.13698041	Dice_coefficient:: 86.30195856%	ErrorRate:5.783677101135254%  time:2022-02-09 11:51:07
+Train Epoch: 4.46 [96/196 (46%)]	Loss: 0.13040373	Dice_coefficient:: 86.95962727%	ErrorRate:5.6310296058654785%  time:2022-02-09 11:51:15
+Train Epoch: 4.50 [104/196 (50%)]	Loss: 0.13279131	Dice_coefficient:: 86.72086895%	ErrorRate:5.566668510437012%  time:2022-02-09 11:51:22
+Train Epoch: 4.54 [112/196 (54%)]	Loss: 0.12973532	Dice_coefficient:: 87.02646792%	ErrorRate:5.167138576507568%  time:2022-02-09 11:51:31
+Train Epoch: 4.58 [120/196 (58%)]	Loss: 0.12769565	Dice_coefficient:: 87.23043501%	ErrorRate:5.82348108291626%  time:2022-02-09 11:51:41
+Train Epoch: 4.62 [128/196 (62%)]	Loss: 0.13381864	Dice_coefficient:: 86.61813587%	ErrorRate:4.374814033508301%  time:2022-02-09 11:51:51
+Train Epoch: 4.67 [136/196 (67%)]	Loss: 0.12051488	Dice_coefficient:: 87.94851229%	ErrorRate:4.971003532409668%  time:2022-02-09 11:52:00
+Train Epoch: 4.71 [144/196 (71%)]	Loss: 0.13658187	Dice_coefficient:: 86.34181321%	ErrorRate:6.1977386474609375%  time:2022-02-09 11:52:08
+Train Epoch: 4.75 [152/196 (75%)]	Loss: 0.13547146	Dice_coefficient:: 86.45285368%	ErrorRate:4.503774642944336%  time:2022-02-09 11:52:16
+Train Epoch: 4.79 [160/196 (79%)]	Loss: 0.11369267	Dice_coefficient:: 88.63073289%	ErrorRate:4.7876715660095215%  time:2022-02-09 11:52:26
+Train Epoch: 4.83 [168/196 (83%)]	Loss: 0.11151804	Dice_coefficient:: 88.84819597%	ErrorRate:5.155956745147705%  time:2022-02-09 11:52:34
+Train Epoch: 4.88 [176/196 (88%)]	Loss: 0.11923981	Dice_coefficient:: 88.07601854%	ErrorRate:4.913830757141113%  time:2022-02-09 11:52:43
+Train Epoch: 4.92 [184/196 (92%)]	Loss: 0.12123872	Dice_coefficient:: 87.87612766%	ErrorRate:6.268453598022461%  time:2022-02-09 11:52:52
+Train Epoch: 4.96 [192/196 (96%)]	Loss: 0.10985826	Dice_coefficient:: 89.01417404%	ErrorRate:4.684197902679443%  time:2022-02-09 11:53:00
+start test nEpochs:5
+
+Eval set: Average eval_loss: 0.1729, Dice_coefficient: 0/48 (83%,ErrorRate:11.600682636102041%)
+
+cost time is 209.887921333313
+best_epoch is 5,best_dice :82.70927916%
+Train Epoch: 5.00 [8/196 (0%)]	Loss: 0.11052211	Dice_coefficient:: 88.94778937%	ErrorRate:4.625487327575684%  time:2022-02-09 11:53:18
+Train Epoch: 5.04 [16/196 (4%)]	Loss: 0.11053010	Dice_coefficient:: 88.94698992%	ErrorRate:4.667294025421143%  time:2022-02-09 11:53:27
+Train Epoch: 5.08 [24/196 (8%)]	Loss: 0.11144902	Dice_coefficient:: 88.85509819%	ErrorRate:4.3604254722595215%  time:2022-02-09 11:53:39
+Train Epoch: 5.12 [32/196 (12%)]	Loss: 0.11520110	Dice_coefficient:: 88.47988993%	ErrorRate:6.421959400177002%  time:2022-02-09 11:53:45
+Train Epoch: 5.17 [40/196 (17%)]	Loss: 0.10299642	Dice_coefficient:: 89.70035762%	ErrorRate:5.107545852661133%  time:2022-02-09 11:53:55
+Train Epoch: 5.21 [48/196 (21%)]	Loss: 0.10684900	Dice_coefficient:: 89.31510001%	ErrorRate:4.7768473625183105%  time:2022-02-09 11:54:01
+Train Epoch: 5.25 [56/196 (25%)]	Loss: 0.10681586	Dice_coefficient:: 89.31841403%	ErrorRate:4.2136311531066895%  time:2022-02-09 11:54:11
+Train Epoch: 5.29 [64/196 (29%)]	Loss: 0.10455900	Dice_coefficient:: 89.54409957%	ErrorRate:4.889464378356934%  time:2022-02-09 11:54:19
+Train Epoch: 5.33 [72/196 (33%)]	Loss: 0.10132396	Dice_coefficient:: 89.86760378%	ErrorRate:4.478883743286133%  time:2022-02-09 11:54:28
+Train Epoch: 5.38 [80/196 (38%)]	Loss: 0.10729630	Dice_coefficient:: 89.27036971%	ErrorRate:3.302609920501709%  time:2022-02-09 11:54:36
+Train Epoch: 5.42 [88/196 (42%)]	Loss: 0.12873387	Dice_coefficient:: 87.12661266%	ErrorRate:5.364108085632324%  time:2022-02-09 11:54:45
+Train Epoch: 5.46 [96/196 (46%)]	Loss: 0.10324490	Dice_coefficient:: 89.67550993%	ErrorRate:4.383456707000732%  time:2022-02-09 11:54:53
+Train Epoch: 5.50 [104/196 (50%)]	Loss: 0.09794081	Dice_coefficient:: 90.20591900%	ErrorRate:4.016900062561035%  time:2022-02-09 11:55:02
+Train Epoch: 5.54 [112/196 (54%)]	Loss: 0.10175626	Dice_coefficient:: 89.82437402%	ErrorRate:4.4647216796875%  time:2022-02-09 11:55:08
+Train Epoch: 5.58 [120/196 (58%)]	Loss: 0.09314515	Dice_coefficient:: 90.68548530%	ErrorRate:5.324280261993408%  time:2022-02-09 11:55:17
+Train Epoch: 5.62 [128/196 (62%)]	Loss: 0.11418284	Dice_coefficient:: 88.58171627%	ErrorRate:4.5656561851501465%  time:2022-02-09 11:55:25
+Train Epoch: 5.67 [136/196 (67%)]	Loss: 0.09660279	Dice_coefficient:: 90.33972099%	ErrorRate:3.241443634033203%  time:2022-02-09 11:55:36
+Train Epoch: 5.71 [144/196 (71%)]	Loss: 0.09433856	Dice_coefficient:: 90.56614414%	ErrorRate:3.6411643028259277%  time:2022-02-09 11:55:47
+Train Epoch: 5.75 [152/196 (75%)]	Loss: 0.09205124	Dice_coefficient:: 90.79487622%	ErrorRate:3.300905227661133%  time:2022-02-09 11:55:54
+Train Epoch: 5.79 [160/196 (79%)]	Loss: 0.10232396	Dice_coefficient:: 89.76760358%	ErrorRate:5.160224437713623%  time:2022-02-09 11:56:02
+Train Epoch: 5.83 [168/196 (83%)]	Loss: 0.09068958	Dice_coefficient:: 90.93104154%	ErrorRate:3.6655783653259277%  time:2022-02-09 11:56:10
+Train Epoch: 5.88 [176/196 (88%)]	Loss: 0.08671851	Dice_coefficient:: 91.32814854%	ErrorRate:4.131221771240234%  time:2022-02-09 11:56:21
+Train Epoch: 5.92 [184/196 (92%)]	Loss: 0.09153562	Dice_coefficient:: 90.84643796%	ErrorRate:3.842043876647949%  time:2022-02-09 11:56:30
+Train Epoch: 5.96 [192/196 (96%)]	Loss: 0.09261818	Dice_coefficient:: 90.73818177%	ErrorRate:2.3496150970458984%  time:2022-02-09 11:56:40
+start test nEpochs:6
+
+Eval set: Average eval_loss: 0.1330, Dice_coefficient: 0/48 (87%,ErrorRate:8.50642534593741%)
+
+cost time is 217.02769589424133
+best_epoch is 6,best_dice :86.69865976%
+Train Epoch: 6.00 [8/196 (0%)]	Loss: 0.09692217	Dice_coefficient:: 90.30778259%	ErrorRate:3.2311558723449707%  time:2022-02-09 11:57:01
+Train Epoch: 6.04 [16/196 (4%)]	Loss: 0.09814571	Dice_coefficient:: 90.18542916%	ErrorRate:5.377256870269775%  time:2022-02-09 11:57:09
+Train Epoch: 6.08 [24/196 (8%)]	Loss: 0.08497564	Dice_coefficient:: 91.50243625%	ErrorRate:5.159449577331543%  time:2022-02-09 11:57:18
+Train Epoch: 6.12 [32/196 (12%)]	Loss: 0.09596651	Dice_coefficient:: 90.40334895%	ErrorRate:2.776181697845459%  time:2022-02-09 11:57:28
+Train Epoch: 6.17 [40/196 (17%)]	Loss: 0.07953202	Dice_coefficient:: 92.04679802%	ErrorRate:3.1191229820251465%  time:2022-02-09 11:57:38
+Train Epoch: 6.21 [48/196 (21%)]	Loss: 0.09389864	Dice_coefficient:: 90.61013609%	ErrorRate:3.967154026031494%  time:2022-02-09 11:57:46
+Train Epoch: 6.25 [56/196 (25%)]	Loss: 0.08587162	Dice_coefficient:: 91.41283780%	ErrorRate:3.191077709197998%  time:2022-02-09 11:57:56
+Train Epoch: 6.29 [64/196 (29%)]	Loss: 0.07897165	Dice_coefficient:: 92.10283533%	ErrorRate:3.3268332481384277%  time:2022-02-09 11:58:04
+Train Epoch: 6.33 [72/196 (33%)]	Loss: 0.08650792	Dice_coefficient:: 91.34920835%	ErrorRate:5.375254154205322%  time:2022-02-09 11:58:12
+Train Epoch: 6.38 [80/196 (38%)]	Loss: 0.08293939	Dice_coefficient:: 91.70606062%	ErrorRate:5.334615707397461%  time:2022-02-09 11:58:18
+Train Epoch: 6.42 [88/196 (42%)]	Loss: 0.08366936	Dice_coefficient:: 91.63306430%	ErrorRate:2.456998825073242%  time:2022-02-09 11:58:25
+Train Epoch: 6.46 [96/196 (46%)]	Loss: 0.07756157	Dice_coefficient:: 92.24384278%	ErrorRate:3.5740256309509277%  time:2022-02-09 11:58:35
+Train Epoch: 6.50 [104/196 (50%)]	Loss: 0.07915816	Dice_coefficient:: 92.08418429%	ErrorRate:4.109489917755127%  time:2022-02-09 11:58:43
+Train Epoch: 6.54 [112/196 (54%)]	Loss: 0.07006199	Dice_coefficient:: 92.99380109%	ErrorRate:2.6440858840942383%  time:2022-02-09 11:58:51
+Train Epoch: 6.58 [120/196 (58%)]	Loss: 0.07656427	Dice_coefficient:: 92.34357253%	ErrorRate:3.4305691719055176%  time:2022-02-09 11:59:02
+Train Epoch: 6.62 [128/196 (62%)]	Loss: 0.07253402	Dice_coefficient:: 92.74659753%	ErrorRate:3.3838272094726562%  time:2022-02-09 11:59:10
+Train Epoch: 6.67 [136/196 (67%)]	Loss: 0.07818143	Dice_coefficient:: 92.18185693%	ErrorRate:3.1645894050598145%  time:2022-02-09 11:59:20
+Train Epoch: 6.71 [144/196 (71%)]	Loss: 0.07267521	Dice_coefficient:: 92.73247868%	ErrorRate:4.955768585205078%  time:2022-02-09 11:59:32
+Train Epoch: 6.75 [152/196 (75%)]	Loss: 0.07943630	Dice_coefficient:: 92.05636978%	ErrorRate:2.8261184692382812%  time:2022-02-09 11:59:40
+Train Epoch: 6.79 [160/196 (79%)]	Loss: 0.07359434	Dice_coefficient:: 92.64056608%	ErrorRate:3.679966926574707%  time:2022-02-09 11:59:48
+Train Epoch: 6.83 [168/196 (83%)]	Loss: 0.06724940	Dice_coefficient:: 93.27505976%	ErrorRate:3.332996368408203%  time:2022-02-09 11:59:57
+Train Epoch: 6.88 [176/196 (88%)]	Loss: 0.06489629	Dice_coefficient:: 93.51037070%	ErrorRate:3.279435634613037%  time:2022-02-09 12:00:03
+Train Epoch: 6.92 [184/196 (92%)]	Loss: 0.06511436	Dice_coefficient:: 93.48856434%	ErrorRate:2.6934027671813965%  time:2022-02-09 12:00:13
+Train Epoch: 6.96 [192/196 (96%)]	Loss: 0.06867322	Dice_coefficient:: 93.13267842%	ErrorRate:2.4436473846435547%  time:2022-02-09 12:00:21
+start test nEpochs:7
+
+Eval set: Average eval_loss: 0.1094, Dice_coefficient: 0/48 (89%,ErrorRate:7.6847027987241745%)
+
+cost time is 217.46399426460266
+best_epoch is 7,best_dice :89.06465930%
+Train Epoch: 7.00 [8/196 (0%)]	Loss: 0.06673414	Dice_coefficient:: 93.32658574%	ErrorRate:2.873671054840088%  time:2022-02-09 12:00:35
+Train Epoch: 7.04 [16/196 (4%)]	Loss: 0.06080424	Dice_coefficient:: 93.91957596%	ErrorRate:3.004157543182373%  time:2022-02-09 12:00:44
+Train Epoch: 7.08 [24/196 (8%)]	Loss: 0.06424609	Dice_coefficient:: 93.57539117%	ErrorRate:3.2770514488220215%  time:2022-02-09 12:00:53
+Train Epoch: 7.12 [32/196 (12%)]	Loss: 0.06376033	Dice_coefficient:: 93.62396672%	ErrorRate:3.1926512718200684%  time:2022-02-09 12:01:03
+Train Epoch: 7.17 [40/196 (17%)]	Loss: 0.06137034	Dice_coefficient:: 93.86296645%	ErrorRate:3.6376953125%  time:2022-02-09 12:01:14
+Train Epoch: 7.21 [48/196 (21%)]	Loss: 0.06036054	Dice_coefficient:: 93.96394566%	ErrorRate:2.874124050140381%  time:2022-02-09 12:01:23
+Train Epoch: 7.25 [56/196 (25%)]	Loss: 0.06215166	Dice_coefficient:: 93.78483444%	ErrorRate:3.0170202255249023%  time:2022-02-09 12:01:33
+Train Epoch: 7.29 [64/196 (29%)]	Loss: 0.06682021	Dice_coefficient:: 93.31797883%	ErrorRate:4.240727424621582%  time:2022-02-09 12:01:44
+Train Epoch: 7.33 [72/196 (33%)]	Loss: 0.08334558	Dice_coefficient:: 91.66544154%	ErrorRate:5.793702602386475%  time:2022-02-09 12:01:52
+Train Epoch: 7.38 [80/196 (38%)]	Loss: 0.06728736	Dice_coefficient:: 93.27126443%	ErrorRate:3.129148483276367%  time:2022-02-09 12:01:58
+Train Epoch: 7.42 [88/196 (42%)]	Loss: 0.05657537	Dice_coefficient:: 94.34246272%	ErrorRate:2.826845645904541%  time:2022-02-09 12:02:06
+Train Epoch: 7.46 [96/196 (46%)]	Loss: 0.06676122	Dice_coefficient:: 93.32387820%	ErrorRate:3.320598602294922%  time:2022-02-09 12:02:11
+Train Epoch: 7.50 [104/196 (50%)]	Loss: 0.07073695	Dice_coefficient:: 92.92630479%	ErrorRate:4.601705074310303%  time:2022-02-09 12:02:22
+Train Epoch: 7.54 [112/196 (54%)]	Loss: 0.05638975	Dice_coefficient:: 94.36102509%	ErrorRate:3.0315399169921875%  time:2022-02-09 12:02:29
+Train Epoch: 7.58 [120/196 (58%)]	Loss: 0.05555207	Dice_coefficient:: 94.44479272%	ErrorRate:2.882826328277588%  time:2022-02-09 12:02:37
+Train Epoch: 7.62 [128/196 (62%)]	Loss: 0.06036620	Dice_coefficient:: 93.96338016%	ErrorRate:3.06851863861084%  time:2022-02-09 12:02:45
+Train Epoch: 7.67 [136/196 (67%)]	Loss: 0.05858101	Dice_coefficient:: 94.14189905%	ErrorRate:2.972269058227539%  time:2022-02-09 12:02:54
+Train Epoch: 7.71 [144/196 (71%)]	Loss: 0.06007877	Dice_coefficient:: 93.99212301%	ErrorRate:3.450477123260498%  time:2022-02-09 12:03:00
+Train Epoch: 7.75 [152/196 (75%)]	Loss: 0.05203935	Dice_coefficient:: 94.79606524%	ErrorRate:2.452981472015381%  time:2022-02-09 12:03:07
+Train Epoch: 7.79 [160/196 (79%)]	Loss: 0.05553908	Dice_coefficient:: 94.44609210%	ErrorRate:2.8262972831726074%  time:2022-02-09 12:03:15
+Train Epoch: 7.83 [168/196 (83%)]	Loss: 0.06325159	Dice_coefficient:: 93.67484078%	ErrorRate:4.121530055999756%  time:2022-02-09 12:03:21
+Train Epoch: 7.88 [176/196 (88%)]	Loss: 0.05537093	Dice_coefficient:: 94.46290731%	ErrorRate:2.4240851402282715%  time:2022-02-09 12:03:31
+Train Epoch: 7.92 [184/196 (92%)]	Loss: 0.05228683	Dice_coefficient:: 94.77131665%	ErrorRate:3.020334243774414%  time:2022-02-09 12:03:35
+Train Epoch: 7.96 [192/196 (96%)]	Loss: 0.04692809	Dice_coefficient:: 95.30719072%	ErrorRate:2.3433327674865723%  time:2022-02-09 12:03:45
+start test nEpochs:8
+
+Eval set: Average eval_loss: 0.0808, Dice_coefficient: 0/48 (92%,ErrorRate:5.3873879214127856%)
+
+cost time is 200.77311849594116
+best_epoch is 8,best_dice :91.92076735%
+Train Epoch: 8.00 [8/196 (0%)]	Loss: 0.04726552	Dice_coefficient:: 95.27344778%	ErrorRate:2.8165698051452637%  time:2022-02-09 12:04:02
+Train Epoch: 8.04 [16/196 (4%)]	Loss: 0.04953373	Dice_coefficient:: 95.04662678%	ErrorRate:2.7204155921936035%  time:2022-02-09 12:04:10
+Train Epoch: 8.08 [24/196 (8%)]	Loss: 0.05139260	Dice_coefficient:: 94.86074001%	ErrorRate:2.757251262664795%  time:2022-02-09 12:04:17
+Train Epoch: 8.12 [32/196 (12%)]	Loss: 0.04604298	Dice_coefficient:: 95.39570212%	ErrorRate:2.2235751152038574%  time:2022-02-09 12:04:28
+Train Epoch: 8.17 [40/196 (17%)]	Loss: 0.04973757	Dice_coefficient:: 95.02624348%	ErrorRate:2.8501152992248535%  time:2022-02-09 12:04:37
+Train Epoch: 8.21 [48/196 (21%)]	Loss: 0.04846988	Dice_coefficient:: 95.15301213%	ErrorRate:2.9059529304504395%  time:2022-02-09 12:04:47
+Train Epoch: 8.25 [56/196 (25%)]	Loss: 0.04933297	Dice_coefficient:: 95.06670311%	ErrorRate:2.6644349098205566%  time:2022-02-09 12:04:56
+Train Epoch: 8.29 [64/196 (29%)]	Loss: 0.04401919	Dice_coefficient:: 95.59808075%	ErrorRate:2.564358711242676%  time:2022-02-09 12:05:06
+Train Epoch: 8.33 [72/196 (33%)]	Loss: 0.05211563	Dice_coefficient:: 94.78843734%	ErrorRate:3.596043586730957%  time:2022-02-09 12:05:14
+Train Epoch: 8.38 [80/196 (38%)]	Loss: 0.04289418	Dice_coefficient:: 95.71058229%	ErrorRate:2.361452579498291%  time:2022-02-09 12:05:21
+Train Epoch: 8.42 [88/196 (42%)]	Loss: 0.04515802	Dice_coefficient:: 95.48419788%	ErrorRate:2.690553665161133%  time:2022-02-09 12:05:26
+Train Epoch: 8.46 [96/196 (46%)]	Loss: 0.05575148	Dice_coefficient:: 94.42485198%	ErrorRate:4.567742347717285%  time:2022-02-09 12:05:33
+Train Epoch: 8.50 [104/196 (50%)]	Loss: 0.04396833	Dice_coefficient:: 95.60316727%	ErrorRate:2.326655387878418%  time:2022-02-09 12:05:41
+Train Epoch: 8.54 [112/196 (54%)]	Loss: 0.04261477	Dice_coefficient:: 95.73852271%	ErrorRate:2.000916004180908%  time:2022-02-09 12:05:50
+Train Epoch: 8.58 [120/196 (58%)]	Loss: 0.04687350	Dice_coefficient:: 95.31264976%	ErrorRate:2.9593586921691895%  time:2022-02-09 12:05:57
+Train Epoch: 8.62 [128/196 (62%)]	Loss: 0.04381913	Dice_coefficient:: 95.61808705%	ErrorRate:2.660250663757324%  time:2022-02-09 12:06:08
+Train Epoch: 8.67 [136/196 (67%)]	Loss: 0.04916228	Dice_coefficient:: 95.08377165%	ErrorRate:3.368997573852539%  time:2022-02-09 12:06:16
+Train Epoch: 8.71 [144/196 (71%)]	Loss: 0.07115623	Dice_coefficient:: 92.88437665%	ErrorRate:7.323002815246582%  time:2022-02-09 12:06:24
+Train Epoch: 8.75 [152/196 (75%)]	Loss: 0.03393341	Dice_coefficient:: 96.60665914%	ErrorRate:2.0146727561950684%  time:2022-02-09 12:06:34
+Train Epoch: 8.79 [160/196 (79%)]	Loss: 0.04039683	Dice_coefficient:: 95.96031681%	ErrorRate:2.314925193786621%  time:2022-02-09 12:06:44
+Train Epoch: 8.83 [168/196 (83%)]	Loss: 0.04849298	Dice_coefficient:: 95.15070245%	ErrorRate:3.855884075164795%  time:2022-02-09 12:06:52
+Train Epoch: 8.88 [176/196 (88%)]	Loss: 0.04006924	Dice_coefficient:: 95.99307626%	ErrorRate:2.1193742752075195%  time:2022-02-09 12:07:02
+Train Epoch: 8.92 [184/196 (92%)]	Loss: 0.03349572	Dice_coefficient:: 96.65042758%	ErrorRate:1.8239259719848633%  time:2022-02-09 12:07:09
+Train Epoch: 8.96 [192/196 (96%)]	Loss: 0.03770743	Dice_coefficient:: 96.22925669%	ErrorRate:2.407205104827881%  time:2022-02-09 12:07:20
+start test nEpochs:9
+
+Eval set: Average eval_loss: 0.0619, Dice_coefficient: 0/48 (94%,ErrorRate:4.373970876137416%)
+
+cost time is 211.28368067741394
+best_epoch is 9,best_dice :93.81450166%
+Train Epoch: 9.00 [8/196 (0%)]	Loss: 0.04728676	Dice_coefficient:: 95.27132362%	ErrorRate:3.9220571517944336%  time:2022-02-09 12:07:35
+Train Epoch: 9.04 [16/196 (4%)]	Loss: 0.05650352	Dice_coefficient:: 94.34964806%	ErrorRate:5.387377738952637%  time:2022-02-09 12:07:44
+Train Epoch: 9.08 [24/196 (8%)]	Loss: 0.03981842	Dice_coefficient:: 96.01815790%	ErrorRate:2.4772047996520996%  time:2022-02-09 12:07:56
+Train Epoch: 9.12 [32/196 (12%)]	Loss: 0.03324713	Dice_coefficient:: 96.67528719%	ErrorRate:2.1290063858032227%  time:2022-02-09 12:08:03
+Train Epoch: 9.17 [40/196 (17%)]	Loss: 0.03309801	Dice_coefficient:: 96.69019878%	ErrorRate:2.153503894805908%  time:2022-02-09 12:08:12
+Train Epoch: 9.21 [48/196 (21%)]	Loss: 0.03959517	Dice_coefficient:: 96.04048282%	ErrorRate:2.8149962425231934%  time:2022-02-09 12:08:21
+Train Epoch: 9.25 [56/196 (25%)]	Loss: 0.03479275	Dice_coefficient:: 96.52072489%	ErrorRate:2.575254440307617%  time:2022-02-09 12:08:27
+Train Epoch: 9.29 [64/196 (29%)]	Loss: 0.03467091	Dice_coefficient:: 96.53290883%	ErrorRate:2.3491740226745605%  time:2022-02-09 12:08:36
+Train Epoch: 9.33 [72/196 (33%)]	Loss: 0.04123661	Dice_coefficient:: 95.87633908%	ErrorRate:3.6274313926696777%  time:2022-02-09 12:08:47
+Train Epoch: 9.38 [80/196 (38%)]	Loss: 0.04498550	Dice_coefficient:: 95.50144970%	ErrorRate:3.4905433654785156%  time:2022-02-09 12:08:52
+Train Epoch: 9.42 [88/196 (42%)]	Loss: 0.03701293	Dice_coefficient:: 96.29870728%	ErrorRate:2.880382537841797%  time:2022-02-09 12:09:04
+Train Epoch: 9.46 [96/196 (46%)]	Loss: 0.03394398	Dice_coefficient:: 96.60560191%	ErrorRate:2.139723300933838%  time:2022-02-09 12:09:13
+Train Epoch: 9.50 [104/196 (50%)]	Loss: 0.04121416	Dice_coefficient:: 95.87858394%	ErrorRate:3.2384395599365234%  time:2022-02-09 12:09:20
+Train Epoch: 9.54 [112/196 (54%)]	Loss: 0.03516751	Dice_coefficient:: 96.48324922%	ErrorRate:2.575671672821045%  time:2022-02-09 12:09:30
+Train Epoch: 9.58 [120/196 (58%)]	Loss: 0.03267001	Dice_coefficient:: 96.73299938%	ErrorRate:2.099597454071045%  time:2022-02-09 12:09:38
+Train Epoch: 9.62 [128/196 (62%)]	Loss: 0.03546718	Dice_coefficient:: 96.45328224%	ErrorRate:2.691042423248291%  time:2022-02-09 12:09:49
+Train Epoch: 9.67 [136/196 (67%)]	Loss: 0.03637943	Dice_coefficient:: 96.36205733%	ErrorRate:3.043687343597412%  time:2022-02-09 12:09:59
+Train Epoch: 9.71 [144/196 (71%)]	Loss: 0.02876178	Dice_coefficient:: 97.12382182%	ErrorRate:2.0995497703552246%  time:2022-02-09 12:10:09
+Train Epoch: 9.75 [152/196 (75%)]	Loss: 0.02901366	Dice_coefficient:: 97.09863439%	ErrorRate:2.2244811058044434%  time:2022-02-09 12:10:15
+Train Epoch: 9.79 [160/196 (79%)]	Loss: 0.03137513	Dice_coefficient:: 96.86248675%	ErrorRate:2.269589900970459%  time:2022-02-09 12:10:24
+Train Epoch: 9.83 [168/196 (83%)]	Loss: 0.03250499	Dice_coefficient:: 96.74950093%	ErrorRate:2.434563636779785%  time:2022-02-09 12:10:33
+Train Epoch: 9.88 [176/196 (88%)]	Loss: 0.03532907	Dice_coefficient:: 96.46709263%	ErrorRate:2.9667258262634277%  time:2022-02-09 12:10:42
+Train Epoch: 9.92 [184/196 (92%)]	Loss: 0.03376626	Dice_coefficient:: 96.62337378%	ErrorRate:2.812516689300537%  time:2022-02-09 12:10:52
+Train Epoch: 9.96 [192/196 (96%)]	Loss: 0.03335069	Dice_coefficient:: 96.66493088%	ErrorRate:2.5815963745117188%  time:2022-02-09 12:10:58
+start test nEpochs:10
+
+Eval set: Average eval_loss: 0.0519, Dice_coefficient: 0/48 (95%,ErrorRate:4.17116346458594%)
+
+cost time is 215.33778548240662
+best_epoch is 10,best_dice :94.81104091%
+Train Epoch: 10.00 [8/196 (0%)]	Loss: 0.03413473	Dice_coefficient:: 96.58652693%	ErrorRate:2.618575096130371%  time:2022-02-09 12:11:15
+Train Epoch: 10.04 [16/196 (4%)]	Loss: 0.02985480	Dice_coefficient:: 97.01452032%	ErrorRate:2.2926926612854004%  time:2022-02-09 12:11:23
+Train Epoch: 10.08 [24/196 (8%)]	Loss: 0.04191466	Dice_coefficient:: 95.80853358%	ErrorRate:3.9719700813293457%  time:2022-02-09 12:11:30
+Train Epoch: 10.12 [32/196 (12%)]	Loss: 0.04464646	Dice_coefficient:: 95.53535432%	ErrorRate:4.427206516265869%  time:2022-02-09 12:11:41
+Train Epoch: 10.17 [40/196 (17%)]	Loss: 0.03004139	Dice_coefficient:: 96.99586108%	ErrorRate:2.4827003479003906%  time:2022-02-09 12:11:52
+Train Epoch: 10.21 [48/196 (21%)]	Loss: 0.02844866	Dice_coefficient:: 97.15513438%	ErrorRate:2.2414326667785645%  time:2022-02-09 12:12:02
+Train Epoch: 10.25 [56/196 (25%)]	Loss: 0.02771575	Dice_coefficient:: 97.22842500%	ErrorRate:2.079474925994873%  time:2022-02-09 12:12:11
+Train Epoch: 10.29 [64/196 (29%)]	Loss: 0.02694541	Dice_coefficient:: 97.30545878%	ErrorRate:2.0186543464660645%  time:2022-02-09 12:12:21
+Train Epoch: 10.33 [72/196 (33%)]	Loss: 0.03715939	Dice_coefficient:: 96.28406093%	ErrorRate:3.437530994415283%  time:2022-02-09 12:12:29
+Train Epoch: 10.38 [80/196 (38%)]	Loss: 0.02833929	Dice_coefficient:: 97.16607109%	ErrorRate:2.198636531829834%  time:2022-02-09 12:12:38
+Train Epoch: 10.42 [88/196 (42%)]	Loss: 0.02925476	Dice_coefficient:: 97.07452431%	ErrorRate:2.4099111557006836%  time:2022-02-09 12:12:43
+Train Epoch: 10.46 [96/196 (46%)]	Loss: 0.02475425	Dice_coefficient:: 97.52457514%	ErrorRate:1.7640233039855957%  time:2022-02-09 12:12:51
+Train Epoch: 10.50 [104/196 (50%)]	Loss: 0.04222562	Dice_coefficient:: 95.77743784%	ErrorRate:4.245877265930176%  time:2022-02-09 12:12:58
+Train Epoch: 10.54 [112/196 (54%)]	Loss: 0.02626532	Dice_coefficient:: 97.37346768%	ErrorRate:2.262401580810547%  time:2022-02-09 12:13:07
+Train Epoch: 10.58 [120/196 (58%)]	Loss: 0.02392010	Dice_coefficient:: 97.60799035%	ErrorRate:1.80281400680542%  time:2022-02-09 12:13:15
+Train Epoch: 10.62 [128/196 (62%)]	Loss: 0.03330574	Dice_coefficient:: 96.66942582%	ErrorRate:3.1281471252441406%  time:2022-02-09 12:13:21
+Train Epoch: 10.67 [136/196 (67%)]	Loss: 0.02834371	Dice_coefficient:: 97.16562852%	ErrorRate:2.566385269165039%  time:2022-02-09 12:13:29
+Train Epoch: 10.71 [144/196 (71%)]	Loss: 0.02784482	Dice_coefficient:: 97.21551836%	ErrorRate:2.408266067504883%  time:2022-02-09 12:13:35
+Train Epoch: 10.75 [152/196 (75%)]	Loss: 0.03683409	Dice_coefficient:: 96.31659091%	ErrorRate:3.753173351287842%  time:2022-02-09 12:13:45
+Train Epoch: 10.79 [160/196 (79%)]	Loss: 0.04021632	Dice_coefficient:: 95.97836807%	ErrorRate:3.8043856620788574%  time:2022-02-09 12:13:52
+Train Epoch: 10.83 [168/196 (83%)]	Loss: 0.02374790	Dice_coefficient:: 97.62521014%	ErrorRate:1.9114136695861816%  time:2022-02-09 12:14:03
+Train Epoch: 10.88 [176/196 (88%)]	Loss: 0.02937730	Dice_coefficient:: 97.06226960%	ErrorRate:2.65042781829834%  time:2022-02-09 12:14:12
+Train Epoch: 10.92 [184/196 (92%)]	Loss: 0.03084338	Dice_coefficient:: 96.91566154%	ErrorRate:2.940034866333008%  time:2022-02-09 12:14:17
+Train Epoch: 10.96 [192/196 (96%)]	Loss: 0.02679833	Dice_coefficient:: 97.32016698%	ErrorRate:2.3628592491149902%  time:2022-02-09 12:14:25
+start test nEpochs:11
+
+Eval set: Average eval_loss: 0.0423, Dice_coefficient: 0/48 (96%,ErrorRate:3.762427344918251%)
+
+cost time is 203.50310254096985
+best_epoch is 11,best_dice :95.76987550%
+Train Epoch: 11.00 [8/196 (0%)]	Loss: 0.02340661	Dice_coefficient:: 97.65933901%	ErrorRate:2.012765407562256%  time:2022-02-09 12:14:45
+Train Epoch: 11.04 [16/196 (4%)]	Loss: 0.02840274	Dice_coefficient:: 97.15972617%	ErrorRate:2.787470817565918%  time:2022-02-09 12:14:55
+Train Epoch: 11.08 [24/196 (8%)]	Loss: 0.03923365	Dice_coefficient:: 96.07663453%	ErrorRate:3.601717948913574%  time:2022-02-09 12:15:04
+Train Epoch: 11.12 [32/196 (12%)]	Loss: 0.02391864	Dice_coefficient:: 97.60813564%	ErrorRate:2.134537696838379%  time:2022-02-09 12:15:11
+Train Epoch: 11.17 [40/196 (17%)]	Loss: 0.02300153	Dice_coefficient:: 97.69984707%	ErrorRate:2.06223726272583%  time:2022-02-09 12:15:20
+Train Epoch: 11.21 [48/196 (21%)]	Loss: 0.02705966	Dice_coefficient:: 97.29403406%	ErrorRate:2.240633964538574%  time:2022-02-09 12:15:29
+Train Epoch: 11.25 [56/196 (25%)]	Loss: 0.02627518	Dice_coefficient:: 97.37248197%	ErrorRate:2.4734973907470703%  time:2022-02-09 12:15:38
+Train Epoch: 11.29 [64/196 (29%)]	Loss: 0.02931112	Dice_coefficient:: 97.06888795%	ErrorRate:2.558767795562744%  time:2022-02-09 12:15:46
+Train Epoch: 11.33 [72/196 (33%)]	Loss: 0.02970599	Dice_coefficient:: 97.02940136%	ErrorRate:2.678191661834717%  time:2022-02-09 12:15:53
+Train Epoch: 11.38 [80/196 (38%)]	Loss: 0.02668735	Dice_coefficient:: 97.33126536%	ErrorRate:2.5756120681762695%  time:2022-02-09 12:16:03
+Train Epoch: 11.42 [88/196 (42%)]	Loss: 0.02948167	Dice_coefficient:: 97.05183282%	ErrorRate:2.6131033897399902%  time:2022-02-09 12:16:13
+Train Epoch: 11.46 [96/196 (46%)]	Loss: 0.03568852	Dice_coefficient:: 96.43114805%	ErrorRate:3.4716010093688965%  time:2022-02-09 12:16:20
+Train Epoch: 11.50 [104/196 (50%)]	Loss: 0.02862004	Dice_coefficient:: 97.13799581%	ErrorRate:2.745068073272705%  time:2022-02-09 12:16:28
+Train Epoch: 11.54 [112/196 (54%)]	Loss: 0.02594050	Dice_coefficient:: 97.40594998%	ErrorRate:2.3117899894714355%  time:2022-02-09 12:16:35
+Train Epoch: 11.58 [120/196 (58%)]	Loss: 0.05453845	Dice_coefficient:: 94.54615489%	ErrorRate:5.650234222412109%  time:2022-02-09 12:16:46
+Train Epoch: 11.62 [128/196 (62%)]	Loss: 0.02691730	Dice_coefficient:: 97.30826989%	ErrorRate:2.352726459503174%  time:2022-02-09 12:16:52
+Train Epoch: 11.67 [136/196 (67%)]	Loss: 0.02701124	Dice_coefficient:: 97.29887620%	ErrorRate:2.3827195167541504%  time:2022-02-09 12:17:00
+Train Epoch: 11.71 [144/196 (71%)]	Loss: 0.03714232	Dice_coefficient:: 96.28576785%	ErrorRate:3.6606311798095703%  time:2022-02-09 12:17:09
+Train Epoch: 11.75 [152/196 (75%)]	Loss: 0.02231149	Dice_coefficient:: 97.76885137%	ErrorRate:1.9698381423950195%  time:2022-02-09 12:17:19
+Train Epoch: 11.79 [160/196 (79%)]	Loss: 0.02861445	Dice_coefficient:: 97.13855535%	ErrorRate:2.6869654655456543%  time:2022-02-09 12:17:27
+Train Epoch: 11.83 [168/196 (83%)]	Loss: 0.02504423	Dice_coefficient:: 97.49557674%	ErrorRate:2.2343039512634277%  time:2022-02-09 12:17:36
+Train Epoch: 11.88 [176/196 (88%)]	Loss: 0.04121151	Dice_coefficient:: 95.87884918%	ErrorRate:4.203474521636963%  time:2022-02-09 12:17:45
+Train Epoch: 11.92 [184/196 (92%)]	Loss: 0.02209147	Dice_coefficient:: 97.79085293%	ErrorRate:1.9274234771728516%  time:2022-02-09 12:17:52
+Train Epoch: 11.96 [192/196 (96%)]	Loss: 0.02367768	Dice_coefficient:: 97.63223231%	ErrorRate:2.0081639289855957%  time:2022-02-09 12:18:00
+start test nEpochs:12
+
+Eval set: Average eval_loss: 0.0411, Dice_coefficient: 0/48 (96%,ErrorRate:3.724012151360512%)
+
+cost time is 211.45527982711792
+best_epoch is 12,best_dice :95.89447627%
+Train Epoch: 12.00 [8/196 (0%)]	Loss: 0.02467339	Dice_coefficient:: 97.53266126%	ErrorRate:2.088034152984619%  time:2022-02-09 12:18:17
+Train Epoch: 12.04 [16/196 (4%)]	Loss: 0.02349147	Dice_coefficient:: 97.65085280%	ErrorRate:1.8726825714111328%  time:2022-02-09 12:18:23
+Train Epoch: 12.08 [24/196 (8%)]	Loss: 0.02723120	Dice_coefficient:: 97.27687985%	ErrorRate:2.6450157165527344%  time:2022-02-09 12:18:33
+Train Epoch: 12.12 [32/196 (12%)]	Loss: 0.02890160	Dice_coefficient:: 97.10984007%	ErrorRate:2.8426289558410645%  time:2022-02-09 12:18:41
+Train Epoch: 12.17 [40/196 (17%)]	Loss: 0.02517695	Dice_coefficient:: 97.48230502%	ErrorRate:2.1796703338623047%  time:2022-02-09 12:18:45
+Train Epoch: 12.21 [48/196 (21%)]	Loss: 0.02357617	Dice_coefficient:: 97.64238298%	ErrorRate:1.9783854484558105%  time:2022-02-09 12:18:53
+Train Epoch: 12.25 [56/196 (25%)]	Loss: 0.02779677	Dice_coefficient:: 97.22032323%	ErrorRate:2.430105209350586%  time:2022-02-09 12:19:00
+Train Epoch: 12.29 [64/196 (29%)]	Loss: 0.04545121	Dice_coefficient:: 95.45487911%	ErrorRate:4.5233845710754395%  time:2022-02-09 12:19:07
+Train Epoch: 12.33 [72/196 (33%)]	Loss: 0.04262240	Dice_coefficient:: 95.73775977%	ErrorRate:4.368984699249268%  time:2022-02-09 12:19:13
+Train Epoch: 12.38 [80/196 (38%)]	Loss: 0.02948922	Dice_coefficient:: 97.05107808%	ErrorRate:2.799391746520996%  time:2022-02-09 12:19:21
+Train Epoch: 12.42 [88/196 (42%)]	Loss: 0.02985797	Dice_coefficient:: 97.01420292%	ErrorRate:2.7432680130004883%  time:2022-02-09 12:19:30
+Train Epoch: 12.46 [96/196 (46%)]	Loss: 0.04099591	Dice_coefficient:: 95.90040892%	ErrorRate:3.9209723472595215%  time:2022-02-09 12:19:36
+Train Epoch: 12.50 [104/196 (50%)]	Loss: 0.02888343	Dice_coefficient:: 97.11165652%	ErrorRate:2.8074145317077637%  time:2022-02-09 12:19:45
+Train Epoch: 12.54 [112/196 (54%)]	Loss: 0.02397975	Dice_coefficient:: 97.60202542%	ErrorRate:2.0622968673706055%  time:2022-02-09 12:19:54
+Train Epoch: 12.58 [120/196 (58%)]	Loss: 0.02527144	Dice_coefficient:: 97.47285619%	ErrorRate:2.231442928314209%  time:2022-02-09 12:20:00
+Train Epoch: 12.62 [128/196 (62%)]	Loss: 0.04459218	Dice_coefficient:: 95.54078206%	ErrorRate:4.452419281005859%  time:2022-02-09 12:20:08
+Train Epoch: 12.67 [136/196 (67%)]	Loss: 0.02917385	Dice_coefficient:: 97.08261490%	ErrorRate:2.646303176879883%  time:2022-02-09 12:20:13
+Train Epoch: 12.71 [144/196 (71%)]	Loss: 0.02802987	Dice_coefficient:: 97.19701260%	ErrorRate:2.678811550140381%  time:2022-02-09 12:20:22
+Train Epoch: 12.75 [152/196 (75%)]	Loss: 0.03155017	Dice_coefficient:: 96.84498310%	ErrorRate:3.1733155250549316%  time:2022-02-09 12:20:27
+Train Epoch: 12.79 [160/196 (79%)]	Loss: 0.02381938	Dice_coefficient:: 97.61806205%	ErrorRate:2.1144747734069824%  time:2022-02-09 12:20:35
+Train Epoch: 12.83 [168/196 (83%)]	Loss: 0.03508256	Dice_coefficient:: 96.49174437%	ErrorRate:3.609609603881836%  time:2022-02-09 12:20:44
+Train Epoch: 12.88 [176/196 (88%)]	Loss: 0.02405246	Dice_coefficient:: 97.59475365%	ErrorRate:2.098989486694336%  time:2022-02-09 12:20:51
+Train Epoch: 12.92 [184/196 (92%)]	Loss: 0.03242725	Dice_coefficient:: 96.75727487%	ErrorRate:2.9851794242858887%  time:2022-02-09 12:20:58
+Train Epoch: 12.96 [192/196 (96%)]	Loss: 0.02143154	Dice_coefficient:: 97.85684645%	ErrorRate:1.8649578094482422%  time:2022-02-09 12:21:02
+start test nEpochs:13
+
+Eval set: Average eval_loss: 0.0407, Dice_coefficient: 0/48 (96%,ErrorRate:3.718141093850136%)
+
+cost time is 179.3494052886963
+best_epoch is 13,best_dice :95.92815799%
+Train Epoch: 13.00 [8/196 (0%)]	Loss: 0.02500721	Dice_coefficient:: 97.49927893%	ErrorRate:2.160823345184326%  time:2022-02-09 12:21:21
+Train Epoch: 13.04 [16/196 (4%)]	Loss: 0.02900093	Dice_coefficient:: 97.09990695%	ErrorRate:2.9044389724731445%  time:2022-02-09 12:21:30
+Train Epoch: 13.08 [24/196 (8%)]	Loss: 0.03060517	Dice_coefficient:: 96.93948254%	ErrorRate:2.986323833465576%  time:2022-02-09 12:21:34
+Train Epoch: 13.12 [32/196 (12%)]	Loss: 0.02380192	Dice_coefficient:: 97.61980772%	ErrorRate:1.97676420211792%  time:2022-02-09 12:21:44
+Train Epoch: 13.17 [40/196 (17%)]	Loss: 0.02150977	Dice_coefficient:: 97.84902260%	ErrorRate:1.8547773361206055%  time:2022-02-09 12:21:53
+Train Epoch: 13.21 [48/196 (21%)]	Loss: 0.02653970	Dice_coefficient:: 97.34603018%	ErrorRate:2.323615550994873%  time:2022-02-09 12:22:01
+Train Epoch: 13.25 [56/196 (25%)]	Loss: 0.04206558	Dice_coefficient:: 95.79344168%	ErrorRate:4.0856242179870605%  time:2022-02-09 12:22:08
+Train Epoch: 13.29 [64/196 (29%)]	Loss: 0.05304539	Dice_coefficient:: 94.69546080%	ErrorRate:5.649685859680176%  time:2022-02-09 12:22:19
+Train Epoch: 13.33 [72/196 (33%)]	Loss: 0.02201114	Dice_coefficient:: 97.79888615%	ErrorRate:1.8044114112854004%  time:2022-02-09 12:22:30
+Train Epoch: 13.38 [80/196 (38%)]	Loss: 0.02835377	Dice_coefficient:: 97.16462269%	ErrorRate:2.5720715522766113%  time:2022-02-09 12:22:36
+Train Epoch: 13.42 [88/196 (42%)]	Loss: 0.03231098	Dice_coefficient:: 96.76890224%	ErrorRate:3.203904628753662%  time:2022-02-09 12:22:43
+Train Epoch: 13.46 [96/196 (46%)]	Loss: 0.03782380	Dice_coefficient:: 96.21761963%	ErrorRate:3.7767529487609863%  time:2022-02-09 12:22:49
+Train Epoch: 13.50 [104/196 (50%)]	Loss: 0.02421588	Dice_coefficient:: 97.57841229%	ErrorRate:2.145659923553467%  time:2022-02-09 12:22:57
+Train Epoch: 13.54 [112/196 (54%)]	Loss: 0.02278561	Dice_coefficient:: 97.72143885%	ErrorRate:1.909804344177246%  time:2022-02-09 12:23:03
+Train Epoch: 13.58 [120/196 (58%)]	Loss: 0.02657512	Dice_coefficient:: 97.34248817%	ErrorRate:2.456235885620117%  time:2022-02-09 12:23:09
+Train Epoch: 13.62 [128/196 (62%)]	Loss: 0.04106498	Dice_coefficient:: 95.89350224%	ErrorRate:4.231250286102295%  time:2022-02-09 12:23:19
+Train Epoch: 13.67 [136/196 (67%)]	Loss: 0.02611163	Dice_coefficient:: 97.38883674%	ErrorRate:2.505791187286377%  time:2022-02-09 12:23:29
+Train Epoch: 13.71 [144/196 (71%)]	Loss: 0.02495023	Dice_coefficient:: 97.50497714%	ErrorRate:2.1376609802246094%  time:2022-02-09 12:23:38
+Train Epoch: 13.75 [152/196 (75%)]	Loss: 0.02466748	Dice_coefficient:: 97.53325209%	ErrorRate:2.2831201553344727%  time:2022-02-09 12:23:46
+Train Epoch: 13.79 [160/196 (79%)]	Loss: 0.03242248	Dice_coefficient:: 96.75775245%	ErrorRate:3.117668628692627%  time:2022-02-09 12:23:55
+Train Epoch: 13.83 [168/196 (83%)]	Loss: 0.03172573	Dice_coefficient:: 96.82742655%	ErrorRate:3.063070774078369%  time:2022-02-09 12:24:04
+Train Epoch: 13.88 [176/196 (88%)]	Loss: 0.02265850	Dice_coefficient:: 97.73414955%	ErrorRate:1.9367575645446777%  time:2022-02-09 12:24:12
+Train Epoch: 13.92 [184/196 (92%)]	Loss: 0.02868485	Dice_coefficient:: 97.13151529%	ErrorRate:2.7541160583496094%  time:2022-02-09 12:24:19
+Train Epoch: 13.96 [192/196 (96%)]	Loss: 0.02605149	Dice_coefficient:: 97.39485085%	ErrorRate:2.203059196472168%  time:2022-02-09 12:24:25
+start test nEpochs:14
+
+Eval set: Average eval_loss: 0.0407, Dice_coefficient: 0/48 (96%,ErrorRate:3.7198465317487717%)
+
+cost time is 199.35896706581116
+best_epoch is 13,best_dice :95.92815799%
+Train Epoch: 14.00 [8/196 (0%)]	Loss: 0.02331444	Dice_coefficient:: 97.66855612%	ErrorRate:2.0388126373291016%  time:2022-02-09 12:24:42
+Train Epoch: 14.04 [16/196 (4%)]	Loss: 0.02558755	Dice_coefficient:: 97.44124487%	ErrorRate:2.2226333618164062%  time:2022-02-09 12:24:49
+Train Epoch: 14.08 [24/196 (8%)]	Loss: 0.03894993	Dice_coefficient:: 96.10500708%	ErrorRate:4.020094871520996%  time:2022-02-09 12:24:58
+Train Epoch: 14.12 [32/196 (12%)]	Loss: 0.02368080	Dice_coefficient:: 97.63192013%	ErrorRate:2.028834819793701%  time:2022-02-09 12:25:06
+Train Epoch: 14.17 [40/196 (17%)]	Loss: 0.03119155	Dice_coefficient:: 96.88084498%	ErrorRate:3.2262563705444336%  time:2022-02-09 12:25:17
+Train Epoch: 14.21 [48/196 (21%)]	Loss: 0.02604744	Dice_coefficient:: 97.39525616%	ErrorRate:2.281308174133301%  time:2022-02-09 12:25:26
+Train Epoch: 14.25 [56/196 (25%)]	Loss: 0.02342115	Dice_coefficient:: 97.65788540%	ErrorRate:1.9566893577575684%  time:2022-02-09 12:25:32
+Train Epoch: 14.29 [64/196 (29%)]	Loss: 0.02223112	Dice_coefficient:: 97.77688757%	ErrorRate:1.8327116966247559%  time:2022-02-09 12:25:41
+Train Epoch: 14.33 [72/196 (33%)]	Loss: 0.04009356	Dice_coefficient:: 95.99064440%	ErrorRate:4.095327854156494%  time:2022-02-09 12:25:51
+Train Epoch: 14.38 [80/196 (38%)]	Loss: 0.03603765	Dice_coefficient:: 96.39623538%	ErrorRate:3.6588191986083984%  time:2022-02-09 12:26:00
+Train Epoch: 14.42 [88/196 (42%)]	Loss: 0.04372474	Dice_coefficient:: 95.62752619%	ErrorRate:4.4257283210754395%  time:2022-02-09 12:26:09
+Train Epoch: 14.46 [96/196 (46%)]	Loss: 0.03366237	Dice_coefficient:: 96.63376287%	ErrorRate:3.145933151245117%  time:2022-02-09 12:26:19
+Train Epoch: 14.50 [104/196 (50%)]	Loss: 0.02287634	Dice_coefficient:: 97.71236628%	ErrorRate:1.8859624862670898%  time:2022-02-09 12:26:29
+Train Epoch: 14.54 [112/196 (54%)]	Loss: 0.02492718	Dice_coefficient:: 97.50728235%	ErrorRate:2.2152304649353027%  time:2022-02-09 12:26:38
+Train Epoch: 14.58 [120/196 (58%)]	Loss: 0.03157697	Dice_coefficient:: 96.84230313%	ErrorRate:3.0350446701049805%  time:2022-02-09 12:26:47
+Train Epoch: 14.62 [128/196 (62%)]	Loss: 0.02866615	Dice_coefficient:: 97.13338539%	ErrorRate:2.7140378952026367%  time:2022-02-09 12:26:53
+Train Epoch: 14.67 [136/196 (67%)]	Loss: 0.02525851	Dice_coefficient:: 97.47414887%	ErrorRate:2.1424174308776855%  time:2022-02-09 12:27:04
+Train Epoch: 14.71 [144/196 (71%)]	Loss: 0.02921785	Dice_coefficient:: 97.07821533%	ErrorRate:2.913808822631836%  time:2022-02-09 12:27:13
+Train Epoch: 14.75 [152/196 (75%)]	Loss: 0.02672634	Dice_coefficient:: 97.32736573%	ErrorRate:2.40403413772583%  time:2022-02-09 12:27:22
+Train Epoch: 14.79 [160/196 (79%)]	Loss: 0.02908914	Dice_coefficient:: 97.09108621%	ErrorRate:2.669823169708252%  time:2022-02-09 12:27:29
+Train Epoch: 14.83 [168/196 (83%)]	Loss: 0.02493647	Dice_coefficient:: 97.50635326%	ErrorRate:2.194523811340332%  time:2022-02-09 12:27:36
+Train Epoch: 14.88 [176/196 (88%)]	Loss: 0.03502016	Dice_coefficient:: 96.49798423%	ErrorRate:3.3849120140075684%  time:2022-02-09 12:27:41
+Train Epoch: 14.92 [184/196 (92%)]	Loss: 0.03678861	Dice_coefficient:: 96.32113948%	ErrorRate:3.5759925842285156%  time:2022-02-09 12:27:49
+Train Epoch: 14.96 [192/196 (96%)]	Loss: 0.02192459	Dice_coefficient:: 97.80754074%	ErrorRate:1.947021484375%  time:2022-02-09 12:27:56
+start test nEpochs:15
+
+Eval set: Average eval_loss: 0.0404, Dice_coefficient: 0/48 (96%,ErrorRate:3.7109879155953727%)
+
+cost time is 209.47213912010193
+best_epoch is 15,best_dice :95.96230288%
+Train Epoch: 15.00 [8/196 (0%)]	Loss: 0.02408845	Dice_coefficient:: 97.59115502%	ErrorRate:2.196025848388672%  time:2022-02-09 12:28:17
+Train Epoch: 15.04 [16/196 (4%)]	Loss: 0.02747218	Dice_coefficient:: 97.25278169%	ErrorRate:2.655494213104248%  time:2022-02-09 12:28:26
+Train Epoch: 15.08 [24/196 (8%)]	Loss: 0.03207613	Dice_coefficient:: 96.79238722%	ErrorRate:3.088963031768799%  time:2022-02-09 12:28:33
+Train Epoch: 15.12 [32/196 (12%)]	Loss: 0.03124250	Dice_coefficient:: 96.87574953%	ErrorRate:3.047943115234375%  time:2022-02-09 12:28:41
+Train Epoch: 15.17 [40/196 (17%)]	Loss: 0.03198428	Dice_coefficient:: 96.80157155%	ErrorRate:3.0437827110290527%  time:2022-02-09 12:28:51
+Train Epoch: 15.21 [48/196 (21%)]	Loss: 0.02352977	Dice_coefficient:: 97.64702320%	ErrorRate:1.9495487213134766%  time:2022-02-09 12:28:59
+Train Epoch: 15.25 [56/196 (25%)]	Loss: 0.03081411	Dice_coefficient:: 96.91858888%	ErrorRate:3.156125545501709%  time:2022-02-09 12:29:06
+Train Epoch: 15.29 [64/196 (29%)]	Loss: 0.03562948	Dice_coefficient:: 96.43705189%	ErrorRate:3.5236001014709473%  time:2022-02-09 12:29:13
+Train Epoch: 15.33 [72/196 (33%)]	Loss: 0.02384777	Dice_coefficient:: 97.61522338%	ErrorRate:2.1088361740112305%  time:2022-02-09 12:29:23
+Train Epoch: 15.38 [80/196 (38%)]	Loss: 0.02139619	Dice_coefficient:: 97.86038101%	ErrorRate:1.8015623092651367%  time:2022-02-09 12:29:31
+Train Epoch: 15.42 [88/196 (42%)]	Loss: 0.02190496	Dice_coefficient:: 97.80950397%	ErrorRate:1.7413616180419922%  time:2022-02-09 12:29:41
+Train Epoch: 15.46 [96/196 (46%)]	Loss: 0.02488776	Dice_coefficient:: 97.51122445%	ErrorRate:2.067446708679199%  time:2022-02-09 12:29:48
+Train Epoch: 15.50 [104/196 (50%)]	Loss: 0.03175437	Dice_coefficient:: 96.82456255%	ErrorRate:3.1766653060913086%  time:2022-02-09 12:29:59
+Train Epoch: 15.54 [112/196 (54%)]	Loss: 0.04207197	Dice_coefficient:: 95.79280317%	ErrorRate:4.069578647613525%  time:2022-02-09 12:30:09
+Train Epoch: 15.58 [120/196 (58%)]	Loss: 0.02721078	Dice_coefficient:: 97.27892205%	ErrorRate:2.621138095855713%  time:2022-02-09 12:30:17
+Train Epoch: 15.62 [128/196 (62%)]	Loss: 0.02885737	Dice_coefficient:: 97.11426347%	ErrorRate:2.868795394897461%  time:2022-02-09 12:30:24
+Train Epoch: 15.67 [136/196 (67%)]	Loss: 0.02477273	Dice_coefficient:: 97.52272666%	ErrorRate:2.1869659423828125%  time:2022-02-09 12:30:35
+Train Epoch: 15.71 [144/196 (71%)]	Loss: 0.02488182	Dice_coefficient:: 97.51181751%	ErrorRate:2.2565484046936035%  time:2022-02-09 12:30:46
+Train Epoch: 15.75 [152/196 (75%)]	Loss: 0.02154981	Dice_coefficient:: 97.84501940%	ErrorRate:1.7527341842651367%  time:2022-02-09 12:30:54
+Train Epoch: 15.79 [160/196 (79%)]	Loss: 0.03066310	Dice_coefficient:: 96.93368971%	ErrorRate:2.9375195503234863%  time:2022-02-09 12:30:58
+Train Epoch: 15.83 [168/196 (83%)]	Loss: 0.02614251	Dice_coefficient:: 97.38574922%	ErrorRate:2.3227572441101074%  time:2022-02-09 12:31:05
+Train Epoch: 15.88 [176/196 (88%)]	Loss: 0.02337752	Dice_coefficient:: 97.66224846%	ErrorRate:2.054321765899658%  time:2022-02-09 12:31:12
+Train Epoch: 15.92 [184/196 (92%)]	Loss: 0.06025545	Dice_coefficient:: 93.97445470%	ErrorRate:5.998432636260986%  time:2022-02-09 12:31:21
+Train Epoch: 15.96 [192/196 (96%)]	Loss: 0.02794731	Dice_coefficient:: 97.20526859%	ErrorRate:2.4315357208251953%  time:2022-02-09 12:31:31
+start test nEpochs:16
+
+Eval set: Average eval_loss: 0.0398, Dice_coefficient: 0/48 (96%,ErrorRate:3.7024817119042077%)
+
+cost time is 211.4186990261078
+best_epoch is 16,best_dice :96.01598817%
+Train Epoch: 16.00 [8/196 (0%)]	Loss: 0.02370093	Dice_coefficient:: 97.62990698%	ErrorRate:2.076435089111328%  time:2022-02-09 12:31:41
+Train Epoch: 16.04 [16/196 (4%)]	Loss: 0.03484403	Dice_coefficient:: 96.51559666%	ErrorRate:3.645777702331543%  time:2022-02-09 12:31:51
+Train Epoch: 16.08 [24/196 (8%)]	Loss: 0.02123281	Dice_coefficient:: 97.87671939%	ErrorRate:1.7401933670043945%  time:2022-02-09 12:32:00
+Train Epoch: 16.12 [32/196 (12%)]	Loss: 0.03360953	Dice_coefficient:: 96.63904682%	ErrorRate:3.118753433227539%  time:2022-02-09 12:32:11
+Train Epoch: 16.17 [40/196 (17%)]	Loss: 0.02733923	Dice_coefficient:: 97.26607725%	ErrorRate:2.437734603881836%  time:2022-02-09 12:32:18
+Train Epoch: 16.21 [48/196 (21%)]	Loss: 0.02399035	Dice_coefficient:: 97.60096520%	ErrorRate:2.10268497467041%  time:2022-02-09 12:32:25
+Train Epoch: 16.25 [56/196 (25%)]	Loss: 0.02415906	Dice_coefficient:: 97.58409411%	ErrorRate:2.064383029937744%  time:2022-02-09 12:32:33
+Train Epoch: 16.29 [64/196 (29%)]	Loss: 0.02193888	Dice_coefficient:: 97.80611172%	ErrorRate:1.747739315032959%  time:2022-02-09 12:32:41
+Train Epoch: 16.33 [72/196 (33%)]	Loss: 0.03315327	Dice_coefficient:: 96.68467268%	ErrorRate:3.3298730850219727%  time:2022-02-09 12:32:48
+Train Epoch: 16.38 [80/196 (38%)]	Loss: 0.02765261	Dice_coefficient:: 97.23473862%	ErrorRate:2.469050884246826%  time:2022-02-09 12:32:58
+Train Epoch: 16.42 [88/196 (42%)]	Loss: 0.02426063	Dice_coefficient:: 97.57393748%	ErrorRate:2.167224884033203%  time:2022-02-09 12:33:07
+Train Epoch: 16.46 [96/196 (46%)]	Loss: 0.02528407	Dice_coefficient:: 97.47159332%	ErrorRate:2.3839354515075684%  time:2022-02-09 12:33:15
+Train Epoch: 16.50 [104/196 (50%)]	Loss: 0.02679375	Dice_coefficient:: 97.32062519%	ErrorRate:2.4304986000061035%  time:2022-02-09 12:33:23
+Train Epoch: 16.54 [112/196 (54%)]	Loss: 0.02458924	Dice_coefficient:: 97.54107594%	ErrorRate:2.162647247314453%  time:2022-02-09 12:33:34
+Train Epoch: 16.58 [120/196 (58%)]	Loss: 0.03503621	Dice_coefficient:: 96.49637863%	ErrorRate:3.4741640090942383%  time:2022-02-09 12:33:38
+Train Epoch: 16.62 [128/196 (62%)]	Loss: 0.03140314	Dice_coefficient:: 96.85968608%	ErrorRate:3.0534982681274414%  time:2022-02-09 12:33:48
+Train Epoch: 16.67 [136/196 (67%)]	Loss: 0.03506283	Dice_coefficient:: 96.49371654%	ErrorRate:3.285694122314453%  time:2022-02-09 12:33:57
+Train Epoch: 16.71 [144/196 (71%)]	Loss: 0.02175473	Dice_coefficient:: 97.82452658%	ErrorRate:1.9197344779968262%  time:2022-02-09 12:34:04
+Train Epoch: 16.75 [152/196 (75%)]	Loss: 0.02713729	Dice_coefficient:: 97.28627056%	ErrorRate:2.339804172515869%  time:2022-02-09 12:34:14
+Train Epoch: 16.79 [160/196 (79%)]	Loss: 0.02970408	Dice_coefficient:: 97.02959210%	ErrorRate:2.8222203254699707%  time:2022-02-09 12:34:24
+Train Epoch: 16.83 [168/196 (83%)]	Loss: 0.04357751	Dice_coefficient:: 95.64224854%	ErrorRate:4.371809959411621%  time:2022-02-09 12:34:33
+Train Epoch: 16.88 [176/196 (88%)]	Loss: 0.02785420	Dice_coefficient:: 97.21458033%	ErrorRate:2.797055244445801%  time:2022-02-09 12:34:42
+Train Epoch: 16.92 [184/196 (92%)]	Loss: 0.03056362	Dice_coefficient:: 96.94363773%	ErrorRate:2.9146552085876465%  time:2022-02-09 12:34:49
+Train Epoch: 16.96 [192/196 (96%)]	Loss: 0.03261299	Dice_coefficient:: 96.73870057%	ErrorRate:3.041660785675049%  time:2022-02-09 12:34:59
+start test nEpochs:17
+
+Eval set: Average eval_loss: 0.0403, Dice_coefficient: 0/48 (96%,ErrorRate:3.7119739999373755%)
+
+cost time is 204.74319982528687
+best_epoch is 16,best_dice :96.01598817%
+Train Epoch: 17.00 [8/196 (0%)]	Loss: 0.02772550	Dice_coefficient:: 97.22744972%	ErrorRate:2.5569915771484375%  time:2022-02-09 12:35:16
+Train Epoch: 17.04 [16/196 (4%)]	Loss: 0.02463841	Dice_coefficient:: 97.53615931%	ErrorRate:2.271747589111328%  time:2022-02-09 12:35:21
+Train Epoch: 17.08 [24/196 (8%)]	Loss: 0.02681368	Dice_coefficient:: 97.31863216%	ErrorRate:2.3597359657287598%  time:2022-02-09 12:35:30
+Train Epoch: 17.12 [32/196 (12%)]	Loss: 0.03116667	Dice_coefficient:: 96.88333273%	ErrorRate:2.9933929443359375%  time:2022-02-09 12:35:38
+Train Epoch: 17.17 [40/196 (17%)]	Loss: 0.03845494	Dice_coefficient:: 96.15450576%	ErrorRate:3.866302967071533%  time:2022-02-09 12:35:44
+Train Epoch: 17.21 [48/196 (21%)]	Loss: 0.02176987	Dice_coefficient:: 97.82301262%	ErrorRate:1.802825927734375%  time:2022-02-09 12:35:55
+Train Epoch: 17.25 [56/196 (25%)]	Loss: 0.02533590	Dice_coefficient:: 97.46640995%	ErrorRate:2.3100852966308594%  time:2022-02-09 12:36:05
+Train Epoch: 17.29 [64/196 (29%)]	Loss: 0.04457761	Dice_coefficient:: 95.54223865%	ErrorRate:4.559540748596191%  time:2022-02-09 12:36:13
+Train Epoch: 17.33 [72/196 (33%)]	Loss: 0.02304424	Dice_coefficient:: 97.69557565%	ErrorRate:2.07139253616333%  time:2022-02-09 12:36:20
+Train Epoch: 17.38 [80/196 (38%)]	Loss: 0.02083473	Dice_coefficient:: 97.91652709%	ErrorRate:1.72041654586792%  time:2022-02-09 12:36:28
+Train Epoch: 17.42 [88/196 (42%)]	Loss: 0.02557213	Dice_coefficient:: 97.44278714%	ErrorRate:2.398371696472168%  time:2022-02-09 12:36:38
+Train Epoch: 17.46 [96/196 (46%)]	Loss: 0.03056929	Dice_coefficient:: 96.94307074%	ErrorRate:2.862215042114258%  time:2022-02-09 12:36:47
+Train Epoch: 17.50 [104/196 (50%)]	Loss: 0.02441946	Dice_coefficient:: 97.55805433%	ErrorRate:2.3270368576049805%  time:2022-02-09 12:36:53
+Train Epoch: 17.54 [112/196 (54%)]	Loss: 0.02956955	Dice_coefficient:: 97.04304487%	ErrorRate:2.8169751167297363%  time:2022-02-09 12:37:04
+Train Epoch: 17.58 [120/196 (58%)]	Loss: 0.02345285	Dice_coefficient:: 97.65471518%	ErrorRate:1.99354887008667%  time:2022-02-09 12:37:11
+Train Epoch: 17.62 [128/196 (62%)]	Loss: 0.02692467	Dice_coefficient:: 97.30753303%	ErrorRate:2.4214744567871094%  time:2022-02-09 12:37:18
+Train Epoch: 17.67 [136/196 (67%)]	Loss: 0.03878123	Dice_coefficient:: 96.12187669%	ErrorRate:3.830897808074951%  time:2022-02-09 12:37:29
+Train Epoch: 17.71 [144/196 (71%)]	Loss: 0.03043837	Dice_coefficient:: 96.95616290%	ErrorRate:3.044593334197998%  time:2022-02-09 12:37:34
+Train Epoch: 17.75 [152/196 (75%)]	Loss: 0.04570197	Dice_coefficient:: 95.42980269%	ErrorRate:4.724454879760742%  time:2022-02-09 12:37:42
+Train Epoch: 17.79 [160/196 (79%)]	Loss: 0.03086388	Dice_coefficient:: 96.91361189%	ErrorRate:2.947556972503662%  time:2022-02-09 12:37:54
+Train Epoch: 17.83 [168/196 (83%)]	Loss: 0.02861775	Dice_coefficient:: 97.13822529%	ErrorRate:2.523481845855713%  time:2022-02-09 12:38:00
+Train Epoch: 17.88 [176/196 (88%)]	Loss: 0.01929358	Dice_coefficient:: 98.07064235%	ErrorRate:1.5248298645019531%  time:2022-02-09 12:38:10
+Train Epoch: 17.92 [184/196 (92%)]	Loss: 0.02921442	Dice_coefficient:: 97.07855806%	ErrorRate:2.7669668197631836%  time:2022-02-09 12:38:18
+Train Epoch: 17.96 [192/196 (96%)]	Loss: 0.04071479	Dice_coefficient:: 95.92852145%	ErrorRate:3.8795828819274902%  time:2022-02-09 12:38:26
+start test nEpochs:18
+
+Eval set: Average eval_loss: 0.0405, Dice_coefficient: 0/48 (96%,ErrorRate:3.714932377139727%)
+
+cost time is 205.6377956867218
+best_epoch is 16,best_dice :96.01598817%
+Train Epoch: 18.00 [8/196 (0%)]	Loss: 0.02385220	Dice_coefficient:: 97.61478007%	ErrorRate:2.109813690185547%  time:2022-02-09 12:38:44
+Train Epoch: 18.04 [16/196 (4%)]	Loss: 0.02670542	Dice_coefficient:: 97.32945785%	ErrorRate:2.3665666580200195%  time:2022-02-09 12:38:53
+Train Epoch: 18.08 [24/196 (8%)]	Loss: 0.03490142	Dice_coefficient:: 96.50985822%	ErrorRate:3.2558441162109375%  time:2022-02-09 12:39:02
+Train Epoch: 18.12 [32/196 (12%)]	Loss: 0.03363985	Dice_coefficient:: 96.63601518%	ErrorRate:3.188788890838623%  time:2022-02-09 12:39:08
+Train Epoch: 18.17 [40/196 (17%)]	Loss: 0.03085054	Dice_coefficient:: 96.91494554%	ErrorRate:3.1142711639404297%  time:2022-02-09 12:39:18
+Train Epoch: 18.21 [48/196 (21%)]	Loss: 0.02216296	Dice_coefficient:: 97.78370410%	ErrorRate:1.8044471740722656%  time:2022-02-09 12:39:26
+Train Epoch: 18.25 [56/196 (25%)]	Loss: 0.02172660	Dice_coefficient:: 97.82733992%	ErrorRate:1.779782772064209%  time:2022-02-09 12:39:36
+Train Epoch: 18.29 [64/196 (29%)]	Loss: 0.02630889	Dice_coefficient:: 97.36911133%	ErrorRate:2.429485321044922%  time:2022-02-09 12:39:46
+Train Epoch: 18.33 [72/196 (33%)]	Loss: 0.02316232	Dice_coefficient:: 97.68376797%	ErrorRate:1.985776424407959%  time:2022-02-09 12:39:55
+Train Epoch: 18.38 [80/196 (38%)]	Loss: 0.03774267	Dice_coefficient:: 96.22573331%	ErrorRate:3.841567039489746%  time:2022-02-09 12:40:06
+Train Epoch: 18.42 [88/196 (42%)]	Loss: 0.02682063	Dice_coefficient:: 97.31793702%	ErrorRate:2.5965213775634766%  time:2022-02-09 12:40:16
+Train Epoch: 18.46 [96/196 (46%)]	Loss: 0.03167087	Dice_coefficient:: 96.83291316%	ErrorRate:3.1257987022399902%  time:2022-02-09 12:40:25
+Train Epoch: 18.50 [104/196 (50%)]	Loss: 0.03770706	Dice_coefficient:: 96.22929394%	ErrorRate:3.581714630126953%  time:2022-02-09 12:40:34
+Train Epoch: 18.54 [112/196 (54%)]	Loss: 0.02088951	Dice_coefficient:: 97.91104868%	ErrorRate:1.732015609741211%  time:2022-02-09 12:40:42

@@ -23,8 +23,8 @@ git clone https://github.com/YellowLight021/Vnet
 cd Vnet
 
 ```
--imgs              #将luna16数据集中的subset文件解压到该目录下。解压完成后目录下应该有raw，mhd两种格式的文件（我实际训练测试只解压了subset0、1）
--seg-lungs-LUNA16  #将luna16数据集中的seg-lungs-LUNA16解压到该目录下。解压完后目录下应该有zraw，mhd两种格式文件
+-imgs              #执行unzip脚本后会将原ct文件都放入该文件夹
+-labels  #执行unzip脚本后会将原标注文件都放入该文件夹
 -README.MD
 -requirements      #模型训练时候需要pip install 的包。SimpleITK、scikit-image、setproctitle，也可以自行pip install安装
 -train.py          #主体运行代码
@@ -40,33 +40,29 @@ pip install -r requirements.txt
 
 
 ###第三步：数据集下载
-[Luna](https://luna16.grand-challenge.org/Data/) （也可以在baiduaistudio公开数据集进行下载，数据集比较大只需要使用3个subset数据集）
+[Prostate](https://promise12.grand-challenge.org/evaluation/challenge/submissions/create/) ）
 
-1、将Luna数据集中的subset解压到imgs里面（我解压了前3个subset作为输入data）
+1、执行unzip.py的脚本将prostate.zip原数据集文件解压并且将文件中对应的标注文件和ct文件分别存储到imgs、labels两个目录下
 
-2、Luna数据集中的seg-lungs-LUNA16是分割的label文件
+2、如图是执行python unzip.py脚本后的目录![images](images/dataset.png)  
 
 ###第四步：模型训练
 
-python -m paddle.distributed.launch train.py --nEpochs 300 
+python train.py
 
-模型每训练一个epoch会进行一次validation，训练了95个epoch的时候dice达到98.5%
-训练日志在log文件夹下，模型参数在链接：https://pan.baidu.com/s/1aI3CrxmypVLCLPJAUTzPpg 
-提取码：qyvl 
-
-###第五步：评估指标对齐
-
-python metric_align.py 发现评估指标和参考代码指标能够对齐
+模型每训练一个epoch会进行一次validation，训练了26个epoch的时候dice达到96.34716849%
+训练日志在log文件夹下，模型参数在链接：https://pan.baidu.com/s/18071tqpGf3igRy0ehgka4g
+提取码：se3q
 
 
 
 
 
-## 在AI Studio上[运行本项目](https://aistudio.baidu.com/aistudio/clusterprojectdetail/3432461/trainTask) 
-1、直接使用aistudio上的数据集(https://aistudio.baidu.com/aistudio/datasetdetail/119677)，https://aistudio.baidu.com/aistudio/datasetdetail/1860
 
-2、在脚本任务环境下直接提交就可以了run.py文件会自动执行数据集解压缩unzip.py，和训练操作train.py操作
+## 在AI Studio上[运行本项目](项目“vnet要求换数据集了”共享链接(有效期三天)：https://aistudio.baidu.com/studio/project/partial/verify/3465814/95246add616a4e8da306bfc807e69ada) 
+1、直接使用aistudio上的数据集(https://aistudio.baidu.com/aistudio/datasetdetail/127509)
 
-3、目前模型以checkpoint来保存的，每训练一个epoch进行一次test和一次checkpoint。将error_rate最小的保存成了checkpoint_model_best.pth.rar。
+2、打开notebook点击全部运行就可以了
 
-4、metric_align.py是metric对齐脚本，测试了一下和官方给到的dice计算是能够对齐的
+3、目前模型以checkpoint来保存的，每训练一个epoch进行一次val和一次checkpoint。将dice最大的保存成了checkpoint_model_best.pth.rar。
+

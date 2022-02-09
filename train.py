@@ -47,7 +47,7 @@ from visualdl import LogWriter
 
 nodule_masks = None
 # lung_masks = "inferred_seg_lungs_2_5"
-lung_masks = 'labels/seg-lungs-LUNA16'
+lung_masks = 'labels'
 # ct_images = "testimgs"
 ct_images = 'imgs'
 ct_targets = lung_masks
@@ -137,6 +137,9 @@ def main():
                         choices=('momentum', 'adam', 'rmsprop'))
     args = parser.parse_args()
     best_prec1 = 100.
+    best_epoch = 0
+    err_best = 100.
+    best_dice = 0
 
     # args.cuda=False
     # args.save = args.save or 'work/vnet.base.{}'.format(datestr())
@@ -181,7 +184,7 @@ def main():
             print("=> loading checkpoint '{}'".format(args.resume))
             checkpoint = paddle.load(args.resume)
             args.start_epoch = checkpoint['epoch']
-            best_prec1 = checkpoint['best_prec1']
+            # best_prec1 = checkpoint['best_prec1']
             model.set_state_dict(checkpoint['state_dict'])
             optimizer.set_state_dict(checkpoint['optimizer_dict'])
             print("=> loaded checkpoint '{}' (epoch {})"
@@ -257,7 +260,7 @@ def main():
     #     batch_size=batch_size, shuffle=True, **kwargs)
     evalSet = LUNA16(root=r'./', images=ct_images, targets=ct_targets,
                      mode="eval", transform=evalTransform, seed=args.seed, masks=masks, split=target_split)
-    eval_sampler = paddle.io.DistributedBatchSampler(evalSet, batch_size=batch_size, shuffle=False)
+    eval_sampler = paddle.io.DistributedBatchSampler(evalSet, batch_size=1, shuffle=False)
     evalLoader = DataLoader(evalSet, batch_sampler=eval_sampler, **kwargs)
 
     # target_mean = trainSet.target_mean()
@@ -272,9 +275,7 @@ def main():
 
     # trainF = open(os.path.join(args.save, 'train.csv'), 'w')
     # evalF = open(os.path.join(args.save, 'eval.csv'), 'w')
-    best_epoch = 0
-    err_best = 100.
-    best_dice = 0
+
     # import pdb
     # pdb.set_trace()
     # log_writer = open(os.path.join(args.save, "train_log.txt"),"a+",encoding='utf-8')
@@ -285,20 +286,18 @@ def main():
         train(args, epoch, model, trainLoader, optimizer, class_weights)
         print('start test nEpochs:{}'.format(epoch))
 
-        err, dice = evale(args, epoch, model, evalLoader, optimizer, class_weights)
+        dice = evale(args, epoch, model, evalLoader, optimizer, class_weights)
         print('cost time is {}'.format(time.time() - start_time))
         is_best = False
         # import pdb
         # pdb.set_trace()
-        if err < best_prec1:
+        if best_dice < dice:
             best_epoch = epoch
             is_best = True
-            best_prec1 = err
             best_dice = dice
-        print('best ErrorRate:{:.8f}%,best_epoch is {},best_dice :{:.8f}%'.format(best_prec1, best_epoch, best_dice))
+        print('best_epoch is {},best_dice :{:.8f}%'.format(best_epoch, best_dice))
         save_checkpoint({'epoch': epoch,
                          'state_dict': model.state_dict(),
-                         'best_prec1': best_prec1,
                          'dice': dice,
                          'optimizer_dict': optimizer.state_dict()},
                         is_best, args.save, "vnet", epoch)
@@ -371,22 +370,31 @@ def eval_dice(args, epoch, model, evalLoader, optimizer, weights):
     incorrect = 0
     Dice_coefficient = 0
     error_rate = 0
+    count = 0
     for data, target in evalLoader:
+        # import pdb
+        # pdb.set_trace()
         output = model(data)
         # import pdb
         # pdb.set_trace()
-        loss = utils.paddle_dice_loss(output, target).item()
+        loss = utils.dice_loss(output, target).item()
 
         eval_loss += loss
         Dice_coefficient += (1. - loss)
-        error_rate += (1 - paddle.metric.accuracy(output.transpose([0, 2, 3, 4, 1]).reshape([-1, 2]),
-                                                  target.reshape([-1, 1]), k=1).item())
 
-    eval_loss /= len(evalLoader)  # loss function already averages over batch size
+        count += 1
+        error_rate += (1 - paddle.metric.accuracy(
+            output[:, :, :target.shape[1], :].transpose([0, 2, 3, 4, 1]).reshape([-1, 2]),
+            target.reshape([-1, 1]), k=1).item())
+        # print("this dice is {}".format(1. - loss,))
+    # import pdb
+    # pdb.set_trace()
+    eval_loss /= count  # loss function already averages over batch size
     nTotal = len(evalLoader)
-    Dice_coefficient = 100. * Dice_coefficient / nTotal
-    error_rate = 100. * error_rate / nTotal
-    print('\nEval set: Average eval_loss: {:.4f}, Dice_coefficient: {}/{} ({:.0f}%),ErrorRate:{}%\n'.format(
+    Dice_coefficient = 100. * Dice_coefficient / count
+    error_rate = 100. * error_rate / count
+
+    print('\nEval set: Average eval_loss: {:.4f}, Dice_coefficient: {}/{} ({:.0f}%,ErrorRate:{}%)\n'.format(
         eval_loss, incorrect, nTotal, Dice_coefficient, error_rate))
     # log_writer.write('\nEval set: Average eval_loss: {:.4f}, Dice_coefficient: {}/{} ({:.0f}%),ErrorRate:{}%\n'.format(
     #     eval_loss, incorrect, nTotal, Dice_coefficient, error_rate))
@@ -395,7 +403,7 @@ def eval_dice(args, epoch, model, evalLoader, optimizer, weights):
     # #                         eval_loss, incorrect, nTotal, Dice_coefficient, error_rate),epoch)
     # evalF.write('{},{},{},{}\n'.format(epoch, eval_loss, Dice_coefficient, error_rate))
     # evalF.flush()
-    return error_rate, Dice_coefficient
+    return Dice_coefficient
 
 
 def adjust_opt(optAlg, optimizer, epoch):
