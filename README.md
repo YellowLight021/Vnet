@@ -60,7 +60,7 @@ python train.py
 
 
 ## 在AI Studio上[运行本项目](项目“vnet要求换数据集了”共享链接(有效期三天)：https://aistudio.baidu.com/studio/project/partial/verify/3465814/95246add616a4e8da306bfc807e69ada) 
-1、直接使用aistudio上的数据集(https://aistudio.baidu.com/aistudio/datasetdetail/127509)
+1、自行上传数据集到aistudio上
 
 2、打开notebook点击全部运行就可以了
 
