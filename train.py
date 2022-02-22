@@ -8,21 +8,11 @@ from paddle.distributed import fleet
 import time
 import argparse
 import numpy as np
-# import torch.nn as nn
 import paddle.nn as nn
-# import torch.nn.init as init
-# import torch.optim as optim
 import paddle.optimizer as optim
-# from paddleseg.utils import logger
-# import torch.nn.functional as F
-# from torch.autograd import Variable
-import paddle.nn.functional as F
 import paddle.vision.transforms as transforms
 from paddle.io import DataLoader
-# from torch.utils.data import DataLoader
 from luna import LUNA16
-# import torchbiomed.transforms as biotransforms
-# import torchbiomed.loss as bioloss
 import utils
 
 import os

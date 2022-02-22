@@ -54,6 +54,10 @@ python train.py
 训练日志在log文件夹下，模型参数在链接：https://pan.baidu.com/s/18071tqpGf3igRy0ehgka4g
 提取码：se3q
 
+###第五步：模型训测试
+python test.py
+模型对testimg目录下的文件进行前向推理操作，预测的结果以npy格式保存到result_path目录下
+
 
 
 
