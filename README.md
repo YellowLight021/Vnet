@@ -28,6 +28,7 @@ cd Vnet
 -README.MD
 -requirements      #模型训练时候需要pip install 的包。SimpleITK、scikit-image、setproctitle，也可以自行pip install安装
 -train.py          #主体运行代码
+-test.py          #测试代码
 -utils.py          #主体运行代码用到的一些函数合集
 -luna.py           #dataset处理模块。包括一些数据预处理和训练集、测试集划分。
 -vnet.py           #vnet模型的paddle代码实现
