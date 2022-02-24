@@ -52,8 +52,8 @@ pip install -r requirements.txt
 python train.py
 
 模型每训练一个epoch会进行一次validation，训练了26个epoch的时候dice达到96.34716849%
-训练日志在log文件夹下，模型参数在链接：https://pan.baidu.com/s/18071tqpGf3igRy0ehgka4g
-提取码：se3q
+训练日志在log文件夹下，模型参数在链接：https://pan.baidu.com/s/1NWrDq50E0ibsGJ2ArWH91w
+提取码：mryw
 
 ### 第五步：模型训测试
 python test.py
