@@ -28,20 +28,16 @@ from functools import reduce
 import operator
 from visualdl import LogWriter
 
-# nodule_masks = "normalized_mask_5_0"
-# lung_masks = "normalized_seg_lungs_5_0"
-# ct_images = "normalized_CT_5_0"
-# target_split = [1, 1, 1]
-# ct_targets = nodule_masks
+
 
 
 nodule_masks = None
-# lung_masks = "inferred_seg_lungs_2_5"
+
 lung_masks = 'labels'
-# ct_images = "testimgs"
+
 ct_images = 'imgs'
 ct_targets = lung_masks
-# 这个参数弃用，因为目前数据集的尺寸是不一样大的
+
 target_split = [2, 2, 2]
 
 
@@ -58,15 +54,11 @@ def datestr():
 
 
 def save_checkpoint(state, is_best, path, prefix, epoch=0, filename='checkpoint.pth.tar'):
-    # import pdb
-    # pdb.set_trace()
-    # prefix_save = os.path.join(path, "epoch" + str(epoch))
-    # name = os.path.join(prefix_save, filename)
-    # paddle.save(state, name)
+
     paddle.save(state, os.path.join(path, 'checkpoint_model_new.pth.tar'))
     if is_best:
         paddle.save(state, os.path.join(path, 'checkpoint_model_best.pth.tar'))
-        # shutil.copyfile(name, os.path.join(path, 'checkpoint_model_best.pth.tar'))
+
 
 
 def inference(args, loader, model, transforms):
@@ -228,47 +220,24 @@ def main():
 
     kwargs = {}
     print("loading training set")
-    # import pdb
-    # pdb.set_trace()
-    # trainSet = dset.LUNA16(root='luna16', images=ct_images, targets=ct_targets,
-    #                        mode="train", transform=trainTransform,
-    #                        class_balance=class_balance, split=target_split, seed=args.seed, masks=masks)
+
     trainSet = LUNA16(root=r'./', images=ct_images, targets=ct_targets,
                       mode="train", transform=trainTransform,
                       class_balance=class_balance, split=target_split, seed=args.seed, masks=masks)
-    # import pdb
-    # pdb.set_trace()
-    # trainLoader = DataLoader(trainSet, batch_size=batch_size, shuffle=True, **kwargs)
-    # train_sampler = paddle.io.RandomSampler(trainSet)
+
     train_sampler = paddle.io.DistributedBatchSampler(trainSet, batch_size=batch_size, shuffle=True, drop_last=True)
     trainLoader = DataLoader(trainSet, batch_sampler=train_sampler, **kwargs)
 
     print("loading eval set")
-    # evalLoader = DataLoader(
-    #     LUNA16(root=r'/home/aistudio/work', images=ct_images, targets=ct_targets,
-    #            mode="eval", transform=evalTransform, seed=args.seed, masks=masks, split=target_split),
-    #     batch_size=batch_size, shuffle=True, **kwargs)
+
     evalSet = LUNA16(root=r'./', images=ct_images, targets=ct_targets,
                      mode="eval", transform=evalTransform, seed=args.seed, masks=masks, split=target_split)
     eval_sampler = paddle.io.DistributedBatchSampler(evalSet, batch_size=1, shuffle=False)
     evalLoader = DataLoader(evalSet, batch_sampler=eval_sampler, **kwargs)
 
-    # target_mean = trainSet.target_mean()
-    # bg_weight = target_mean / (1. + target_mean)
-    # fg_weight = 1. - bg_weight
-    # print(bg_weight)
+
     class_weights = []
-    # class_weights = paddle.to_tensor([bg_weight, fg_weight])
 
-    # import pdb
-    # pdb.set_trace()
-
-    # trainF = open(os.path.join(args.save, 'train.csv'), 'w')
-    # evalF = open(os.path.join(args.save, 'eval.csv'), 'w')
-
-    # import pdb
-    # pdb.set_trace()
-    # log_writer = open(os.path.join(args.save, "train_log.txt"),"a+",encoding='utf-8')
     for epoch in range(args.start_epoch + 1, args.nEpochs + 1):
 
         start_time = time.time()
@@ -291,15 +260,7 @@ def main():
                          'dice': dice,
                          'optimizer_dict': optimizer.state_dict()},
                         is_best, args.save, "vnet", epoch)
-        # os.system('./plot.py {} {} &'.format(len(trainLoader), args.save))
-        # print('best_epoch is {},best_err is {}'.format(best_epoch, err))
-        # log_writer.close()
-    # for i in range(4):
-    #     time.sleep(30)
-    #     print('**********************************')
-    # log_writer.close()
-    # trainF.close()
-    # evalF.close()
+
 
 
 def train_dice(args, epoch, model, trainLoader, optimizer, weights):
@@ -307,10 +268,7 @@ def train_dice(args, epoch, model, trainLoader, optimizer, weights):
     nProcessed = 0
     nTrain = len(trainLoader.dataset)
     for batch_idx, (data, target) in enumerate(trainLoader):
-        # print('m======{}'.format(m))
-        # import pdb
-        # pdb.set_trace()
-        # try:
+
         if ((data < -1).sum().item() + (data > 1).sum().item()) > 0:
             continue
         optimizer.clear_grad()
@@ -328,30 +286,17 @@ def train_dice(args, epoch, model, trainLoader, optimizer, weights):
             'Train Epoch: {:.2f} [{}/{} ({:.0f}%)]\tLoss: {:.8f}\tDice_coefficient:: {:.8f}%\tErrorRate:{}%  time:{}'.format(
                 partialEpoch, nProcessed, nTrain, 100. * batch_idx / len(trainLoader),
                 loss.item(), Dice_coefficient, error_rate, time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())))
-        # if paddle.isnan(loss):
-        #     print('when it is not a number dice_co:{},loss.item():{},loss:{},data:{},target:{},output:{},out_dict:{}'.format(Dice_coefficient,
-        #     loss.item(),loss,data,target,output,out_dict))
-        #     print('model.state_dict:{}'.format(model.state_dict()))
-        #     break
+
         if paddle.isnan(loss):
             print('data:{}'.format(data))
             print('model.state_dict{}'.format(model.state_dict()))
             print('output:{}'.format(output))
-        # log_writer.write('\nTrain Epoch: {:.2f} [{}/{} ({:.0f}%)]\tLoss: {:.8f}\tDice_coefficient:: {:.8f}%\tErrorRate:{}%\n'.format(
-        #     partialEpoch, nProcessed, nTrain, 100. * batch_idx / len(trainLoader),
-        #     loss.item(), Dice_coefficient, error_rate))
-        # log_writer.add_scalar('TrainInfo',
-        #                     'Train Epoch: {:.2f} [{}/{} ({:.0f}%)]\tLoss: {:.8f}\tDice_coefficient:: {:.8f}%\tErrorRate:{}%'.format(
-        #                         partialEpoch, nProcessed, nTrain, 100. * batch_idx / len(trainLoader),
-        #                         loss.item(), Dice_coefficient, error_rate),batch_idx)
+
         del Dice_coefficient
         del error_rate
         loss.backward()
         optimizer.step()
-        # trainF.write('{},{},{},{}\n'.format(partialEpoch, loss.item(), Dice_coefficient, error_rate))
-        # trainF.flush()
-        # except:
-        #     print('error happend data is {}'.format(data))
+
 
 
 def eval_dice(args, epoch, model, evalLoader, optimizer, weights):
@@ -386,13 +331,7 @@ def eval_dice(args, epoch, model, evalLoader, optimizer, weights):
 
     print('\nEval set: Average eval_loss: {:.4f}, Dice_coefficient: {}/{} ({:.0f}%,ErrorRate:{}%)\n'.format(
         eval_loss, incorrect, nTotal, Dice_coefficient, error_rate))
-    # log_writer.write('\nEval set: Average eval_loss: {:.4f}, Dice_coefficient: {}/{} ({:.0f}%),ErrorRate:{}%\n'.format(
-    #     eval_loss, incorrect, nTotal, Dice_coefficient, error_rate))
-    # # log_writer.add_scalar('EvalInfo',
-    # #                     '\nEval set: Average eval_loss: {:.4f}, Dice_coefficient: {}/{} ({:.0f}%),ErrorRate:{}%\n'.format(
-    # #                         eval_loss, incorrect, nTotal, Dice_coefficient, error_rate),epoch)
-    # evalF.write('{},{},{},{}\n'.format(epoch, eval_loss, Dice_coefficient, error_rate))
-    # evalF.flush()
+
     return Dice_coefficient
 
 

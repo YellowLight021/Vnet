@@ -17,8 +17,8 @@
 - [https://github.com/mattmacy/vnet.pytorch](https://github.com/mattmacy/vnet.pytorch)
 
 
-##快速开始
-###第一步：克隆本项目
+## 快速开始
+### 第一步：克隆本项目
 git clone https://github.com/YellowLight021/Vnet
 cd Vnet
 
@@ -34,20 +34,20 @@ cd Vnet
 -vnet.py           #vnet模型的paddle代码实现
 ```
 
-###第二步：安装第三方库
+### 第二步：安装第三方库
 pip install -r requirements.txt
 #### 代码结构与说明
 
 
 
-###第三步：数据集下载
+### 第三步：数据集下载
 [Prostate](https://promise12.grand-challenge.org/evaluation/challenge/submissions/create/) ）
 
 1、执行unzip.py的脚本将prostate.zip原数据集文件解压并且将文件中对应的标注文件和ct文件分别存储到imgs、labels两个目录下
 
 2、如图是执行python unzip.py脚本后的目录![images](images/dataset.png)  
 
-###第四步：模型训练
+### 第四步：模型训练
 
 python train.py
 
@@ -55,7 +55,7 @@ python train.py
 训练日志在log文件夹下，模型参数在链接：https://pan.baidu.com/s/18071tqpGf3igRy0ehgka4g
 提取码：se3q
 
-###第五步：模型训测试
+### 第五步：模型训测试
 python test.py
 模型对testimg目录下的文件进行前向推理操作，预测的结果以npy格式保存到result_path目录下
 
